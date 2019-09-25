@@ -1,0 +1,26 @@
+
+    <div class="card" style="width: 18rem;">
+        <a [routerLink]="['/products', product.id]"
+            routerLinkActive="active"
+            style="cursor: pointer;">
+            <img class="card-img-top" [src]="product.imageUrl" alt="Card image cap">
+            <div class="card-body">
+                <p class="card-subtitle mb-2 text-muted">{{ product.category }}</p>
+                <h5 class="card-title">{{ product.title }}</h5>
+            </div> 
+        </a> 
+        <div class="row card-body">
+                <p class="col-md-6"><strong>Rs {{ product.price }}</strong></p>
+                <button 
+                (click)="onAddToCart(i)" 
+                role="button"
+                *ngIf="!product.addedToCart"
+                class="btn btn-primary col-md-6"
+                >Add to Cart</button>
+                <button 
+                class="btn btn-success col-md-6"
+                role="button"
+                *ngIf="product.addedToCart"
+                >Added to Cart</button>
+            </div>
+    </div>

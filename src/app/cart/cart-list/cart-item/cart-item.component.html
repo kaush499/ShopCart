@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-sm-3">
+        <img class="cartImage rounded float-left" [src]="item.imageUrl" alt="Image">
+    </div>
+    <div class="col-sm-3">
+        <h5>{{ item.title }}</h5>
+    </div>
+    <div class="col-sm-2">
+        <div class="row">
+            <div class="col-4">
+                <a class="badge badge-primary" (click)="onSubtractQuantity()"><span>&#45;</span></a>
+            </div>
+            <div class="col-4">
+                <p class="">{{ item.quantity }}</p>
+            </div>
+            <div class="col-sm-4">
+                <a class="badge badge-primary" (click)="onAddQuantity()"><span>&#43;</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <p><strong>{{ item.quantity }} x Rs {{ item.price }}</strong></p>
+    </div>
+    <div class="col-sm-2">
+        <button class="btn btn-danger" (click)="onRemove()">Remove</button>
+    </div>
+</div>
