@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,10 +15,13 @@ import { EmptyCartComponent } from './cart/empty-cart/empty-cart.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { ProductCreateComponent } from './product/product-create/product-create.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 import { ProductItemComponent } from './product/product-list/product-item/product-item.component';
 import { ProductComponent } from './product/product.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { LoginComponent } from './auth/login/login.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 
 
@@ -35,18 +38,22 @@ import { ProductComponent } from './product/product.component';
     ProductCreateComponent,
     ProductDetailComponent,
     ProductItemComponent,
-    ProductComponent
+    ProductComponent,
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [
     CartService,
-    ProductService
+    ProductService,
+    { provide:HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
