@@ -22,6 +22,9 @@ import { ProductComponent } from './product/product.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
+import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
+import { MyOrdersComponent } from './user/my-orders/my-orders.component';
 
 
 
@@ -40,7 +43,10 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     ProductItemComponent,
     ProductComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    AdminOrdersComponent,
+    AdminProductsComponent,
+    MyOrdersComponent
   ],
   imports: [
     BrowserModule,

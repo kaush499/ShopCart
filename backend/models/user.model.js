@@ -8,7 +8,7 @@ var User = function(user){
 
 User.createUser = (newUser, response) => {
     let query = "INSERT INTO user SET ?";
-    connection.query(query, [newUser], (err, results, fields) => {
+    connection.query(query, [newUser], (err, results) => {
         if(err){
             response(err, null);
         } else {

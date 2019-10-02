@@ -29,6 +29,7 @@ router.post('/signup', (req, res, next) => {
                 res.status(200).json({
                     message: "User created!",
                     token: token,
+                    userId: user.userId,
                     expiresIn: 3600
                 });
             } 
@@ -44,21 +45,25 @@ router.post('/login', (req, res, next) => {
                 message: "Auth failed"
             });
         }else {
-            let matchPassword = bcrypt.compare(req.body.password, user.password);
-            if(!matchPassword){
-                res.status(401).json({
-                    message: "Auth failed"
-                });
-            }
-            const token = jwt.sign(
-                { email: user.email, userId: user.id },
-                secret,
-                { expiresIn: "1h" }
-            );
-            res.status(200).json({
-                token: token,
-                name: user.name,
-                expiresIn: 3600
+            bcrypt.compare(req.body.password, user.password, (err, same) => {
+                if(err || !same){
+                    res.status(401).json({
+                        message: "Auth failed"
+                    });
+                } else{
+                    const token = jwt.sign(
+                        { email: user.email, userId: user.id },
+                        secret,
+                        { expiresIn: "1h" }
+                    );
+                    res.status(200).json({
+                        token: token,
+                        userId: user.userId,
+                        name: user.name,
+                        isAdmin: user.isAdmin,
+                        expiresIn: 3600
+                    });
+                }
             });
         }
     })

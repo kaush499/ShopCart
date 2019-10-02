@@ -1,38 +1,3 @@
-<!-- <nav class="navbar navbar-expand-lg bg-light">
-  <a class="navbar-brand" routerLink="/">MyEcommerce</a>
-
-  <div class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/products">Products</a>
-      </li>
-    </ul> -->
-    <!-- <div class="justify-content-center">
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-    </div> -->
-    <!-- <ul class="navbar-nav">
-        <li class="nav-item"
-            role="presentation" 
-            routerLinkActive="active">
-            <a routerLink="/cart" 
-                class="nav-link" >Cart</a>
-          </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Sign In</a>
-      </li>
-    </ul>
-  </div>
-</nav> -->
-
 <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
   <a class="navbar-brand" routerLink="/">KS store</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,12 +13,17 @@
           <a class="nav-link" routerLink="/products">Products</a>
       </li>
       <li *ngIf="userIsAuthenticated" ngbDropdown class="nav-item dropdown">
-        <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ userName }}</a>
+        <a ngbDropdownToggle 
+          class="nav-link dropdown-toggle" 
+          id="dropdown01" data-toggle="dropdown" 
+          aria-haspopup="true" aria-expanded="false"
+        >{{ userName }}<span *ngIf="isAdmin"> (Admin)</span>
+        </a>
         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
           <a class="dropdown-item" routerLink="/my/orders">My Orders</a>
-          <a class="dropdown-item" routerLink="/admin/orders">Manage Orders</a>
-          <a class="dropdown-item" routerLink="/admin/products">Manage Products</a>
-          <a class="dropdown-item" (click)="onLogout()">Logout</a>
+          <a *ngIf="isAdmin" class="dropdown-item" routerLink="/admin/orders">Manage Orders</a>
+          <a *ngIf="isAdmin" class="dropdown-item" routerLink="/admin/products">Manage Products</a>
+          <a class="dropdown-item cursorStyle"  (click)="onLogout()">Logout</a>
         </div>
       </li>  
     </ul>
