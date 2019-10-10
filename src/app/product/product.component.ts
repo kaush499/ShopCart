@@ -15,7 +15,6 @@ export class ProductComponent implements OnInit {
   }
 
   onNewProduct(){
-    this.router.navigate(['new'], {relativeTo: this.route});
   }
 
 }

@@ -8,3 +8,5 @@ CREATE TABLE user (
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
+
+-- Admin : name = kau and email=kau@123.com and password=123456

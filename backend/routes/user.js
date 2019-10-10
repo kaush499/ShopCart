@@ -17,19 +17,19 @@ router.post('/signup', (req, res, next) => {
         });
         User.createUser(newUser, (err, userId) => {
             if(err){
-                res.status(500).json({
+                res.status(401).json({
                     error: err
                 });
             } else {
                 const token = jwt.sign(
-                    { email: newUser.email, userId: userId },
+                    { email: newUser.email, isAdmin: false },
                     secret,
                     { expiresIn: "1h" }
                 );
                 res.status(200).json({
                     message: "User created!",
                     token: token,
-                    userId: user.userId,
+                    userId: userId,
                     expiresIn: 3600
                 });
             } 
@@ -52,7 +52,7 @@ router.post('/login', (req, res, next) => {
                     });
                 } else{
                     const token = jwt.sign(
-                        { email: user.email, userId: user.id },
+                        { email: user.email, isAdmin: user.isAdmin },
                         secret,
                         { expiresIn: "1h" }
                     );

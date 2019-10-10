@@ -1,6 +1,11 @@
 <div class="row">
     <div class="col-sm-10 col-xs-12 col-md-8 col sm-offset-1 col-md-offset-2">
-        <form (ngSubmit)="onLogin(f)" #f="ngForm">
+        <div *ngIf="isLoading" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <form *ngIf="!isLoading" (ngSubmit)="onLogin(f)" #f="ngForm">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input class="form-control" type="email" id="email" name="email" ngModel>

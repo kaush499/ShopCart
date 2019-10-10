@@ -14,7 +14,6 @@ import { ProductService } from './product/product.service';
 import { EmptyCartComponent } from './cart/empty-cart/empty-cart.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
-import { ProductCreateComponent } from './product/product-create/product-create.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
 import { ProductItemComponent } from './product/product-list/product-item/product-item.component';
@@ -25,6 +24,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { MyOrdersComponent } from './user/my-orders/my-orders.component';
+import { ProductCreateComponent } from './admin/admin-products/product-create/product-create.component';
 
 
 
@@ -38,7 +38,6 @@ import { MyOrdersComponent } from './user/my-orders/my-orders.component';
     CartListComponent,
     EmptyCartComponent,
     HomeComponent,
-    ProductCreateComponent,
     ProductDetailComponent,
     ProductItemComponent,
     ProductComponent,
@@ -46,7 +45,8 @@ import { MyOrdersComponent } from './user/my-orders/my-orders.component';
     LoginComponent,
     AdminOrdersComponent,
     AdminProductsComponent,
-    MyOrdersComponent
+    MyOrdersComponent,
+    ProductCreateComponent
   ],
   imports: [
     BrowserModule,

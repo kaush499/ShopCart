@@ -1,6 +1,6 @@
 var connection = require('../connection/mysql_db');
 
-var User = function(user){
+var User = (user) => {
     this.name = user.name;
     this.email = user.email;
     this.password = user.password;
@@ -23,9 +23,10 @@ User.findUser = (userEmail, response) => {
     let query = "SELECT * FROM user WHERE email = ?";
     connection.query(query, userEmail, (err, result) => {
         if(err){
+            console.log("inside moel" + err);
             response(err, null);
         } else {
-            if(!result){
+            if(result.length==0 || !result){
                 response("No results found", null);
             } else {
                 const user = result[0];
