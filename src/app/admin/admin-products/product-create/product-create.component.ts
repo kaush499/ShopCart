@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UUID } from 'angular2-uuid';
+import { Category } from 'src/app/shared/category/category.model';
+import { Product } from 'src/app/shared/product/product.model';
+import { CategoryService } from 'src/app/shared/category/category.service';
+import { ProductService } from 'src/app/shared/product/product.service';
 
 @Component({
   selector: 'app-product-create',
@@ -9,13 +11,53 @@ import { UUID } from 'angular2-uuid';
   styleUrls: ['./product-create.component.css']
 })
 export class ProductCreateComponent implements OnInit {
+  category: Category[];
+  product: Product;
+
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private categoryService: CategoryService,
+              private productService: ProductService) {}
+
+  ngOnInit() {
+    this.categoryService.getAllCategory()
+    .subscribe(category => {
+      this.category = category;
+    });
+
+
+
+  }            
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   // id: string;
   // editMode: boolean = false;
   // productForm: FormGroup;
 
   // constructor(private route: ActivatedRoute,
-  //             private router: Router,
-  //             private productService: ProductService) {}
+  //             private router: Router) {}
 
   // ngOnInit() {
   //   if(this.route.snapshot.params['id']){
@@ -65,7 +107,5 @@ export class ProductCreateComponent implements OnInit {
   // onCancel(){
   //   this.router.navigate(['../'], {relativeTo: this.route});
   // }
-
-  ngOnInit() { }
 
 }

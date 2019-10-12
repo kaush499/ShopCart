@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 
 var app = express();
 
-var  productRoutes = require('./routes/products');
+var  productRoutes = require('./routes/products/product');
 var userRoutes = require('./routes/user');
 var categoryRoutes = require('./routes/products/category');
 
