@@ -8,21 +8,21 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit, OnDestroy {
-    isCartEmpty: boolean;
-    private suscription: Subscription;
+    // isCartEmpty: boolean;
+    // private suscription: Subscription;
 
   constructor(private cartService: CartService) { }
 
   ngOnInit() {
-    this.isCartEmpty = this.cartService.getCartEmptyValue();
-    this.suscription = this.cartService.getUpdatedCartEmptyValue()
-      .subscribe((isEmpty: boolean) => {
-        this.isCartEmpty = isEmpty;
-      })
+    // this.isCartEmpty = this.cartService.getCartEmptyValue();
+    // this.suscription = this.cartService.getUpdatedCartEmptyValue()
+    //   .subscribe((isEmpty: boolean) => {
+    //     this.isCartEmpty = isEmpty;
+    //   })
   }
 
   ngOnDestroy() {
-    this.suscription.unsubscribe();
+    // this.suscription.unsubscribe();
   }
 
 }

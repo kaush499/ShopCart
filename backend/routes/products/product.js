@@ -16,20 +16,22 @@ router.get("", (req, res, next) => {
                 product: result
             });
         }
-    })
+    });
+
 });
 
 router.post("", checkAuth, checkIsAdmin, (req, res, next) => {
     const prd = req.body.newProduct;
     const newProduct = new Product({
-        parentCategoryId: prd.categoryId,
+        parentCategoryId: prd.category,
         title: prd.title,
         imagePath: prd.imagePath,
         price: prd.price
     });
-
+    console.log(newProduct);
     Product.addProduct(newProduct, (err, result) => {
         if(err) {
+            console.log(err);
             res.status(500).send({
                 message: err
             });

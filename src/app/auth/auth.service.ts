@@ -33,14 +33,14 @@ export class AuthService {
         const newUser: AuthData = {name: name, email: email, password: password};
         this.http
         .post<{ message: string, token: string, userId: number, expiresIn: number }>(
-            "http://localhost:3000/users/signup", 
+            "http://localhost:3000/users/signup",
             newUser
         )
         .subscribe(response => {
             const token = response.token;
             this.token = token;
             if (token) {
-                this.userService.setUser(response.userId, name, false);        
+                this.userService.setUser(response.userId, name, 0);        
                 const expiresInDuration = response.expiresIn;
                 this.setAuthTimer(expiresInDuration);
                 this.isAuthenticated = true;
@@ -48,16 +48,19 @@ export class AuthService {
                 const now = new Date();
                 const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
                 console.log(expirationDate);
-                this.saveAuthData(token, expirationDate);
-                this.router.navigate(["/"]);
+                this.saveAuthData(token, expirationDate); 
             }
+        }, err => {
+            console.log(err);
+        }, () => {
+            this.router.navigate(["/"]);
         })
     }
 
     login(email: string, password: string) {
         const user = {email: email, password: password};
         this.http
-        .post<{token: string, userId: number, name: string, isAdmin: boolean, expiresIn: number}>(
+        .post<{token: string, userId: number, name: string, isAdmin: number, expiresIn: number}>(
             "http://localhost:3000/users/login",
             user
         )
@@ -74,8 +77,11 @@ export class AuthService {
                 const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
                 console.log(expirationDate);
                 this.saveAuthData(token, expirationDate);
-                this.router.navigate(["/"]);
             }
+        }, err => {
+            console.log(err);
+        }, () => {
+            this.router.navigate(["/"]);
         })
     }
 

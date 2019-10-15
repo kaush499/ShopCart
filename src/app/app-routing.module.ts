@@ -25,10 +25,9 @@ const routes: Routes = [
   ]},
   { path: "cart", component: CartComponent},
   { path: "my/orders", component: MyOrdersComponent, canActivate: [AuthGuard] },
-  { path: "admin/products", component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard], children: [
-    { path: "new", component: ProductCreateComponent },
-    { path: "edit/:id", component: ProductCreateComponent }
-  ] },
+  { path: "admin/products", component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard]},
+  { path: "admin/products/new", component: ProductCreateComponent, canActivate: [AuthGuard, AdminAuthGuard]},
+  { path: "admin/products/new/:id", component: ProductCreateComponent, canActivate: [AuthGuard, AdminAuthGuard]},
   { path: "admin/orders", component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] }
 ];
 

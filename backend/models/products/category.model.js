@@ -5,7 +5,7 @@ var Category = (category) => {
 };
 
 Category.getAllCategory = (response) => {
-    let query = "SELECT * FROM category";
+    let query = "SELECT * FROM category ORDER BY categoryName";
     connection.query(query, (err, result) => {
         if(err){
             console.log(err);

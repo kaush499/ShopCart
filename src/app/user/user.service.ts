@@ -24,11 +24,11 @@ export class UserService {
         return this.userStatus.asObservable();
     }
 
-    setUser(userId: number, userName: string, isAdmin: boolean) {
+    setUser(userId: number, userName: string, isAdmin: number) {
         this.userId = userId;
         this.userName = userName;
-        this.isAdmin = isAdmin;
-        this.saveUserData(userId, userName, isAdmin);
+        this.isAdmin = isAdmin == 0 ? false: true;
+        this.saveUserData(userId, userName, this.isAdmin);
         this.userStatus.next(userName);
     }
 

@@ -7,11 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
-import { CartItemComponent } from './cart/cart-list/cart-item/cart-item.component';
-import { CartListComponent } from './cart/cart-list/cart-list.component';
 import { CartService } from './cart/cart.service';
-import { ProductService } from './product/product.service';
-import { EmptyCartComponent } from './cart/empty-cart/empty-cart.component';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -34,9 +30,6 @@ import { ProductCreateComponent } from './admin/admin-products/product-create/pr
     HeaderComponent,
     ProductListComponent,
     CartComponent,
-    CartItemComponent,
-    CartListComponent,
-    EmptyCartComponent,
     HomeComponent,
     ProductDetailComponent,
     ProductItemComponent,
@@ -57,8 +50,6 @@ import { ProductCreateComponent } from './admin/admin-products/product-create/pr
     FormsModule
   ],
   providers: [
-    CartService,
-    ProductService,
     { provide:HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

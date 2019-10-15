@@ -1,15 +1,7 @@
-.myForm {
-    margin: auto;
-}
-
-input {
-    width: 40%;
+#displayImage {
+    height: 250px;
 }
 
 button {
-    margin: 0 5px;
-}
-
-img {
-    height: 250px;
+    margin: 15px 10px;
 }

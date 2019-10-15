@@ -1,6 +1,6 @@
 var connection = require('../../connection/mysql_db');
 
-var Product = (product) => {
+var Product = function(product){
     this.parentCategoryId = product.parentCategoryId;
     this.title = product.title;
     this.imagePath = product.imagePath;
@@ -8,7 +8,7 @@ var Product = (product) => {
 };
 
 Product.addProduct = (newProduct, response) => {
-    let query = "INSERT INTO product SET ?";
+    let query = "INSERT INTO products SET ?";
     connection.query(query, newProduct, (err, result) => {
         if(err){
             response(err, null);
@@ -57,3 +57,5 @@ Product.deleteProduct = (prdId, response) => {
         }
     })
 }
+
+module.exports = Product;

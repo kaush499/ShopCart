@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from 'src/app/shared/category/category.model';
-import { Product } from 'src/app/shared/product/product.model';
 import { CategoryService } from 'src/app/shared/category/category.service';
 import { ProductService } from 'src/app/shared/product/product.service';
+import { NgForm } from '@angular/forms';
+import { Category } from 'src/app/shared/category/category.model';
 
 @Component({
   selector: 'app-product-create',
@@ -11,8 +11,9 @@ import { ProductService } from 'src/app/shared/product/product.service';
   styleUrls: ['./product-create.component.css']
 })
 export class ProductCreateComponent implements OnInit {
-  category: Category[];
-  product: Product;
+  categories: Category[];
+  product = {};
+  id;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -21,13 +22,29 @@ export class ProductCreateComponent implements OnInit {
 
   ngOnInit() {
     this.categoryService.getAllCategory()
-    .subscribe(category => {
-      this.category = category;
-    });
+    .subscribe(categories => {
+      this.categories = categories;
+    })
+
+    this.id = this.route.snapshot.paramMap.get('id');
+    if(this.id) {
+      this.product = this.productService.getProductById(this.id);
+    }
+
+  }
+
+  onSave(productForm: NgForm) {
+    let newProduct = productForm.value;
+    const selectedCategory = this.categories.find(c => {
+       return c.categoryId == newProduct.category; 
+    })
+    newProduct.categoryName = selectedCategory.categoryName;
+    this.productService.addProduct(newProduct);
+  }
+
+  onDelete() {}
 
 
-
-  }            
 
  
  
