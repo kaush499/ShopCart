@@ -21,6 +21,7 @@ export class ProductCreateComponent implements OnInit {
               private productService: ProductService) {}
 
   ngOnInit() {
+    console.log("inside create");
     this.categoryService.getAllCategory()
     .subscribe(categories => {
       this.categories = categories;
@@ -29,6 +30,7 @@ export class ProductCreateComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     if(this.id) {
       this.product = this.productService.getProductById(this.id);
+      console.log(this.product);
     }
 
   }
@@ -42,7 +44,9 @@ export class ProductCreateComponent implements OnInit {
     this.productService.addProduct(newProduct);
   }
 
-  onDelete() {}
+  onDelete() {
+    this.productService.deleteProduct(this.id);
+  }
 
 
 

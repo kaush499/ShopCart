@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ProductService } from 'src/app/shared/product/product.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -8,9 +8,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AdminProductsComponent implements OnInit {
 
-  constructor(private router: Router,
-              private route: ActivatedRoute) { }
+    constructor(private productService: ProductService) {}
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+      console.log("inside admin prd");
+      this.productService.initialiseProducts();
+    }
+ 
 }

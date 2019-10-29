@@ -6,8 +6,10 @@ var checkAuth = require('../../middleware/check-auth');
 var checkIsAdmin = require('../../middleware/check-isAdmin');
 
 router.get("", (req, res, next) => {
+    console.log("server");
     Product.getAllProduct((err, result) => {
         if(err){ 
+            
             res.status(500).send({
                 message: err
             });

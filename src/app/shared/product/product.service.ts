@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Product } from './product.model';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 @Injectable({ providedIn: "root" })
 export class ProductService {
+    private prdInitialised: boolean = false;
     private products: Product[] = [];
     private productsUpdated = new Subject<Product[]>();
 
@@ -26,7 +27,7 @@ export class ProductService {
     }
 
     getProductById(id: number){
-        if(this.products){
+        if(this.products.length !== 0){
             return this.products.find(prd => {
                 return prd.productId == id;
             });
@@ -36,15 +37,23 @@ export class ProductService {
         
     }
 
-    getAll() {
-        this.http
-        .get<{product: Product[]}>
-        ("http://localhost:3000/products")
-        .subscribe(response => {
-            this.products = response.product;
-            this.productsUpdated.next([...this.products]);
-        });
+    initialiseProducts() {
+        if(!this.prdInitialised){
+            this.http
+            .get<{product: Product[]}>
+            ("http://localhost:3000/products")
+            .subscribe(response => {
+                this.products = response.product;
+                this.prdInitialised = true;
+                this.productsUpdated.next([...this.products]);
+            });
+        }
     }
+
+    getAll() {
+        return [...this.products];
+    }
+        
 
     addProduct(product) {
         const newProduct = {
@@ -70,5 +79,21 @@ export class ProductService {
         }, () => {
             this.router.navigate(['/admin/products']);
         })
+    }
+
+    deleteProduct(id: string) {
+        const prdId = Number(id);
+        this.http
+        .delete("http://localhost:3000/products/"+id)
+        .subscribe(response => {
+            const deletedPrdIndex = this.products.findIndex(prd => {
+                return prd.productId == prdId
+            });
+            this.products.slice(deletedPrdIndex, 1);
+        }, err => {
+            console.log(err);
+        }, () => {
+            this.router.navigate(['/admin/products']);
+        }) 
     }
 }

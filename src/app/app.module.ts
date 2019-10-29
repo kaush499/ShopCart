@@ -6,8 +6,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { ProductListComponent } from './product/product-list/product-list.component';
-import { CartService } from './cart/cart.service';
 import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -21,6 +19,7 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { MyOrdersComponent } from './user/my-orders/my-orders.component';
 import { ProductCreateComponent } from './admin/admin-products/product-create/product-create.component';
+import { ProductListComponent } from './admin/admin-products/product-list/product-list.component';
 
 
 
@@ -47,7 +46,7 @@ import { ProductCreateComponent } from './admin/admin-products/product-create/pr
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

@@ -21,9 +21,10 @@ Product.addProduct = (newProduct, response) => {
 
 Product.getAllProduct = (response) => {
     let query = `SELECT  productId, title, imagePath, price, categoryName AS category
-                 FROM product 
-                 INNER JOIN category ON (product.parentCategoryId = category.categoryId)`;
+                 FROM products 
+                 INNER JOIN category ON (products.parentCategoryId = category.categoryId)`;
     connection.query(query, (err, result) => {
+        console.log(err);
         if(err){
             response(err, null);
         }else {
