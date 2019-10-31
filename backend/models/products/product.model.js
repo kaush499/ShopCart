@@ -20,7 +20,7 @@ Product.addProduct = (newProduct, response) => {
 };
 
 Product.getAllProduct = (response) => {
-    let query = `SELECT  productId, title, imagePath, price, categoryName AS category
+    let query = `SELECT  productId, title, imagePath, price, categoryName, categoryId AS category
                  FROM products 
                  INNER JOIN category ON (products.parentCategoryId = category.categoryId)`;
     connection.query(query, (err, result) => {
@@ -37,9 +37,10 @@ Product.getAllProduct = (response) => {
     });                          
 };
 
-Product.updateProduct = ({updatedProduct, prdId}, response) => {
-    let query = `UPDATE product SET ? WHERE productId = ?`;
-    connection.query(query, [updatedProduct, prdId], (err, result) => {
+Product.updateProduct = (body, response) => {
+    let query = `UPDATE products SET ? WHERE productId = ?`;
+    connection.query(query, [body.updatedPrd, body.prdId], (err, result) => {
+        console.log(err);
         if(err) {
             response(err, null);
         }else {
@@ -49,7 +50,7 @@ Product.updateProduct = ({updatedProduct, prdId}, response) => {
 }
 
 Product.deleteProduct = (prdId, response) => {
-    let query = `DELETE FROM product WHERE productId = ?`;
+    let query = `DELETE FROM products WHERE productId = ?`;
     connection.query(query, prdId, (err, result) => {
         if(err) {
             response(err, null);

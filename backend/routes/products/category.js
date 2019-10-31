@@ -5,6 +5,7 @@ var Category = require('../../models/products/category.model');
 var checkAuth = require('../../middleware/check-auth');
 var checkIsAdmin = require('../../middleware/check-isAdmin');
 
+//Retrieving all categories
 router.get("", checkAuth, checkIsAdmin, (req, res, next) => {
     Category.getAllCategory((err, results) => {
         if(err){

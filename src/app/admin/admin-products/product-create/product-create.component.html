@@ -24,7 +24,8 @@
           <div class="form-group">
             <label for="category">Category</label>
             <select #category="ngModel" [(ngModel)]="product.category" name="category" id="category" class="form-control" required>
-              <option value="" selected disabled hidden><i *ngIf="id">currently selected {{ product.category }}</i></option>
+              <option  value="" hidden></option>
+              <!-- <option *ngIf="id" [value]="product.categoryId" selected disabled hidden>{{ product.category }}</option> -->
               <option *ngFor="let c of categories" [value]="c.categoryId">
                 {{ c.categoryName }}
               </option>
@@ -42,11 +43,11 @@
             </div>
           </div>
           <div>
-            <img *ngIf="(imageUrl.touched && imageUrl.invalid) || id" [src]="imageUrl.value" id="displayImage" alt="" class="img-fluid img-thumbnail" >        
+            <img *ngIf="!(imageUrl.touched && imageUrl.invalid) || id" [src]="imageUrl.value" id="displayImage" alt="" class="img-fluid img-thumbnail" >        
           </div>
           
-          <button class="btn btn-primary" type="submit">Save</button>
-          <button class="btn btn-warning" type="button">Cancel</button>
+          <button [disabled]="f.invalid" class="btn btn-primary" type="submit">Save</button>
+          <button class="btn btn-warning" (click)="onCancel()" type="button">Cancel</button>
           <button *ngIf="id" type="button" (click)="onDelete()" class="btn btn-danger">Delete</button>
         </form>    
     </div>

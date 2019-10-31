@@ -20,6 +20,7 @@ import { AdminProductsComponent } from './admin/admin-products/admin-products.co
 import { MyOrdersComponent } from './user/my-orders/my-orders.component';
 import { ProductCreateComponent } from './admin/admin-products/product-create/product-create.component';
 import { ProductListComponent } from './admin/admin-products/product-list/product-list.component';
+import { NgbdSortableHeader } from './admin/admin-products/product-list/services/sortable.service';
 
 
 
@@ -38,7 +39,8 @@ import { ProductListComponent } from './admin/admin-products/product-list/produc
     AdminOrdersComponent,
     AdminProductsComponent,
     MyOrdersComponent,
-    ProductCreateComponent
+    ProductCreateComponent,
+    NgbdSortableHeader
   ],
   imports: [
     BrowserModule,

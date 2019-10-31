@@ -6,15 +6,15 @@ var jwt = require('jsonwebtoken');
 
 var secret = require("../connection/secret_value");
 
-
+//creating a new User
 router.post('/signup', (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
-        const newUser = new User({
+        const newUser = {
             name: req.body.name,
             email: req.body.email,
             password: hash
-        });
+        };
         User.createUser(newUser, (err, userId) => {
             if(err){
                 res.status(401).json({
@@ -38,6 +38,7 @@ router.post('/signup', (req, res, next) => {
     
 });
 
+//Authenticating a user
 router.post('/login', (req, res, next) => {
     User.findUser(req.body.email, (err, user) => {
         if(err) {

@@ -1,3 +1,5 @@
+//For checking if a user is admin or not
+
 module.exports = (req, res, next) => {
     if(req.body.userData.isAdmin == 1 || req.body.userData.isAdmin){
         next();

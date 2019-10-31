@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Product } from './product.model';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -62,21 +62,46 @@ export class ProductService {
             category: Number(product.category),
             price: product.price
         };
-        console.log(newProduct);
         this.http
         .post<{productId: number}>
         ('http://localhost:3000/products', {newProduct: newProduct})
         .subscribe(response => {
              this.products.push({
                 title: product.title,
-                imagePath: product.imagePath,
+                imagePath: product.imageUrl,
                 category: product.categoryName,
                 price: product.price,
-                productId: response.productId
+                productId: response.productId,
+                categoryId: newProduct.category
              });
+             this.router.navigate(['/admin/products']);
         }, err => {
             console.log(err);
-        }, () => {
+        });
+    }
+
+    editProduct(product, id) {
+        const prdId = Number(id);
+        const updatedProduct = {
+            title: product.title,
+            imagePath: product.imageUrl,
+            category: Number(product.category),
+            price: product.price
+        };
+        this.http
+        .put(`http://localhost:3000/products/${id}`, { updatedProduct: updatedProduct })
+        .subscribe(response => {
+            const editedPrdIndex = this.products.findIndex(prd => {
+                return prd.productId == prdId
+            });
+            this.products[editedPrdIndex] = {
+                title: product.title,
+                imagePath: product.imageUrl,
+                category: product.categoryName,
+                price: product.price,
+                productId: prdId,
+                categoryId: updatedProduct.category
+            }
             this.router.navigate(['/admin/products']);
         })
     }
@@ -84,16 +109,15 @@ export class ProductService {
     deleteProduct(id: string) {
         const prdId = Number(id);
         this.http
-        .delete("http://localhost:3000/products/"+id)
+        .delete(`http://localhost:3000/products/${id}`)
         .subscribe(response => {
             const deletedPrdIndex = this.products.findIndex(prd => {
                 return prd.productId == prdId
             });
-            this.products.slice(deletedPrdIndex, 1);
+            this.products.splice(deletedPrdIndex, 1);
+            this.router.navigate(['/admin/products']);
         }, err => {
             console.log(err);
-        }, () => {
-            this.router.navigate(['/admin/products']);
-        }) 
+        }); 
     }
 }

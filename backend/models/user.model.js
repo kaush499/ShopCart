@@ -6,6 +6,7 @@ var User = (user) => {
     this.password = user.password;
 };
 
+//Creating a new user
 User.createUser = (newUser, response) => {
     let query = "INSERT INTO user SET ?";
     connection.query(query, [newUser], (err, results) => {
@@ -19,11 +20,11 @@ User.createUser = (newUser, response) => {
     });
 };
 
+//verifying a user (by finding it in database)
 User.findUser = (userEmail, response) => {
     let query = "SELECT * FROM user WHERE email = ?";
     connection.query(query, userEmail, (err, result) => {
         if(err){
-            console.log("inside moel" + err);
             response(err, null);
         } else {
             if(result.length==0 || !result){
