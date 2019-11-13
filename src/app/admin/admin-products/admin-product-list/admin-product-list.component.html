@@ -3,11 +3,10 @@
 </p>
 
 <hr>
-<!-- <form> -->
-    <!-- <div class="form-group form-inline">
-        search: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"/>
-        <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
-    </div> -->
+<form> 
+     <div class="form-group form-inline">
+        search: <input class="form-control ml-2" type="text" name="searchTerm" [formControl]="filter"/>
+    </div>
 
     <table class="table table-striped">
         <thead>
@@ -19,8 +18,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of items; let i = index">
-                    <th scope="row">{{ i+1 }}</th>
+            <tr *ngFor="let item of itemsPag; let i = index">
+                    <th scope="row">{{ ((page-1)*pageSize)+(i+1) }}</th>
                     <td>{{ item.title }}</td>
                     <td>{{ item.price | currency:'USD' }}</td>
                     <td><a class="btn btn-primary" [routerLink]="['/admin/products/', item.productId]">Edit</a></td>
@@ -28,18 +27,18 @@
         </tbody>
     </table>
 
-    <!-- <div class="d-flex justify-content-between p-2">
+    <div class="d-flex justify-content-between p-2">
         <ngb-pagination
-            [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+            [collectionSize]="itemsCount" [(page)]="page" [pageSize]="pageSize" (pageChange)="onPageChange()">
         </ngb-pagination>
 
-        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+        <!-- <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
             <option [ngValue]="2">2 items per page</option>
             <option [ngValue]="4">4 items per page</option>
             <option [ngValue]="6">6 items per page</option>
-        </select>
-    </div> -->
+        </select> -->
+    </div>
 
-<!-- </form> -->
+</form>
 
             

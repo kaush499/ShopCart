@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Product } from './product.model';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { Product } from 'src/app/shared/product/product.model';
 
 @Injectable({ providedIn: "root" })
-export class ProductService {
+export class AdminProuctService {
     private prdInitialised: boolean = false;
     private products: Product[] = [];
     private productsUpdated = new Subject<Product[]>();
@@ -41,7 +41,7 @@ export class ProductService {
         if(!this.prdInitialised){
             this.http
             .get<{product: Product[]}>
-            ("http://localhost:3000/products")
+            ("http://localhost:3000/admin/products")
             .subscribe(response => {
                 this.products = response.product;
                 this.prdInitialised = true;
@@ -64,12 +64,12 @@ export class ProductService {
         };
         this.http
         .post<{productId: number}>
-        ('http://localhost:3000/products', {newProduct: newProduct})
+        ('http://localhost:3000/admin/products', {newProduct: newProduct})
         .subscribe(response => {
              this.products.push({
                 title: product.title,
                 imagePath: product.imageUrl,
-                category: product.categoryName,
+                categoryName: product.categoryName,
                 price: product.price,
                 productId: response.productId,
                 categoryId: newProduct.category
@@ -89,7 +89,7 @@ export class ProductService {
             price: product.price
         };
         this.http
-        .put(`http://localhost:3000/products/${id}`, { updatedProduct: updatedProduct })
+        .put(`http://localhost:3000/admin/products/${id}`, { updatedProduct: updatedProduct })
         .subscribe(response => {
             const editedPrdIndex = this.products.findIndex(prd => {
                 return prd.productId == prdId
@@ -97,7 +97,7 @@ export class ProductService {
             this.products[editedPrdIndex] = {
                 title: product.title,
                 imagePath: product.imageUrl,
-                category: product.categoryName,
+                categoryName: product.categoryName,
                 price: product.price,
                 productId: prdId,
                 categoryId: updatedProduct.category
@@ -109,7 +109,7 @@ export class ProductService {
     deleteProduct(id: string) {
         const prdId = Number(id);
         this.http
-        .delete(`http://localhost:3000/products/${id}`)
+        .delete(`http://localhost:3000/admin/products/${id}`)
         .subscribe(response => {
             const deletedPrdIndex = this.products.findIndex(prd => {
                 return prd.productId == prdId

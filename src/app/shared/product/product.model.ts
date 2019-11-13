@@ -1,6 +1,6 @@
 export interface Product {
     productId: number;
-    category: string;
+    categoryName: string;
     price: number;
     imagePath: string;
     title: string;

@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, Input, Output, Injectable, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, EventEmitter, Input, Output, Injectable, ElementRef, Renderer2, PipeTransform } from '@angular/core';
 import { Product } from 'src/app/shared/product/product.model';
 
 export type SortDirection = 'asc' | 'desc' | '';
@@ -44,7 +44,7 @@ export class NgbdSortableHeader {
 }
 
 @Injectable({providedIn: 'root'})
-export class SortTableService {
+export class TableService {
     SortPrd(products: Product[], {column, direction}: SortEvent) {
         if (direction === '') {
             return products;
@@ -55,4 +55,12 @@ export class SortTableService {
             });
         }
     }
-}
+
+    search(text: string, pipe: PipeTransform, products: Product[]) {
+      return products.filter(product => {
+        const term = text.toLowerCase();
+        return product.title.toLowerCase().includes(term)
+            || product.categoryName.toLowerCase().includes(term);
+      });
+    }
+ }

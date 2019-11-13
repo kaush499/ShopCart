@@ -10,8 +10,6 @@ import { CartComponent } from './cart/cart.component';
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProductDetailComponent } from './product/product-detail/product-detail.component';
-import { ProductItemComponent } from './product/product-list/product-item/product-item.component';
-import { ProductComponent } from './product/product.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
@@ -19,8 +17,11 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { MyOrdersComponent } from './user/my-orders/my-orders.component';
 import { ProductCreateComponent } from './admin/admin-products/product-create/product-create.component';
-import { ProductListComponent } from './admin/admin-products/product-list/product-list.component';
-import { NgbdSortableHeader } from './admin/admin-products/product-list/services/sortable.service';
+import { AdminProductListComponent } from './admin/admin-products/admin-product-list/admin-product-list.component';
+import { NgbdSortableHeader } from './admin/admin-products/admin-product-list/data-table.service';
+import { CommonModule } from '@angular/common';
+import { ProductCardComponent } from './product/product-list/product-card/product-card.component';
+import { ProductFilterComponent } from './product/product-list/product-filter/product-filter.component';
 
 
 
@@ -28,19 +29,19 @@ import { NgbdSortableHeader } from './admin/admin-products/product-list/services
   declarations: [
     AppComponent,
     HeaderComponent,
-    ProductListComponent,
+    AdminProductListComponent,
     CartComponent,
     HomeComponent,
     ProductDetailComponent,
-    ProductItemComponent,
-    ProductComponent,
     SignupComponent,
     LoginComponent,
     AdminOrdersComponent,
     AdminProductsComponent,
     MyOrdersComponent,
     ProductCreateComponent,
-    NgbdSortableHeader
+    NgbdSortableHeader,
+    ProductCardComponent,
+    ProductFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +50,8 @@ import { NgbdSortableHeader } from './admin/admin-products/product-list/services
     HttpClientModule,
     NgbModule,
     FormsModule,
+    CommonModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

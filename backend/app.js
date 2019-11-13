@@ -3,9 +3,10 @@ var bodyParser = require("body-parser");
 
 var app = express();
 
-var  productRoutes = require('./routes/products/product');
+var productRoutes = require('./routes/products/product');
 var userRoutes = require('./routes/user');
 var categoryRoutes = require('./routes/products/category');
+var adminProductRoutes = require('./routes/admin/admin-products');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/admin/products', adminProductRoutes);
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
 app.use('/products/category', categoryRoutes);

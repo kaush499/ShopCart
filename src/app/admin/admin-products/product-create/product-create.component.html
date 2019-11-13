@@ -23,9 +23,9 @@
           </div>        
           <div class="form-group">
             <label for="category">Category</label>
-            <select #category="ngModel" [(ngModel)]="product.category" name="category" id="category" class="form-control" required>
-              <option  value="" hidden></option>
-              <!-- <option *ngIf="id" [value]="product.categoryId" selected disabled hidden>{{ product.category }}</option> -->
+            <select #category="ngModel" [(ngModel)]="product.categoryId" name="category" id="category" class="form-control" required>
+              <option value="" selected hidden>{{ product.categoryName }}</option>
+              <!-- <option *ngIf="id" value="" selected hidden>{{ product.categoryName }}</option> -->
               <option *ngFor="let c of categories" [value]="c.categoryId">
                 {{ c.categoryName }}
               </option>

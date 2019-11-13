@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from 'src/app/shared/category/category.service';
-import { ProductService } from 'src/app/shared/product/product.service';
 import { NgForm } from '@angular/forms';
 import { Category } from 'src/app/shared/category/category.model';
+import { AdminProuctService } from '../admin-product.service';
 
 @Component({
   selector: 'app-product-create',
@@ -14,11 +14,12 @@ export class ProductCreateComponent implements OnInit {
   categories: Category[];
   product = {};
   id;
+  some = "qwe";
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private categoryService: CategoryService,
-              private productService: ProductService) {}
+              private productService: AdminProuctService) {}
 
   ngOnInit() {
     this.categoryService.getAllCategory()

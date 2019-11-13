@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/shared/product/product.service';
+import { AdminProuctService } from './admin-product.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -8,7 +8,7 @@ import { ProductService } from 'src/app/shared/product/product.service';
 })
 export class AdminProductsComponent implements OnInit {
 
-    constructor(private productService: ProductService) {}
+    constructor(private productService: AdminProuctService) {}
 
     ngOnInit() {
       console.log("inside admin prd");
