@@ -7,7 +7,7 @@ var checkIsAdmin = require('../../middleware/check-isAdmin');
 
 
 // For getting all products from database
-router.get("", (req, res, next) => {
+router.get("",checkAuth, checkIsAdmin, (req, res, next) => {
     Product.getAllProduct((err, result) => {
         if(err){ 
             

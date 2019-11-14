@@ -22,6 +22,7 @@ import { NgbdSortableHeader } from './admin/admin-products/admin-product-list/da
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from './product/product-list/product-card/product-card.component';
 import { ProductFilterComponent } from './product/product-list/product-filter/product-filter.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
 
 
 
@@ -41,7 +42,8 @@ import { ProductFilterComponent } from './product/product-list/product-filter/pr
     ProductCreateComponent,
     NgbdSortableHeader,
     ProductCardComponent,
-    ProductFilterComponent
+    ProductFilterComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,

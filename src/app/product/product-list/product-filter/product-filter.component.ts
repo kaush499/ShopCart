@@ -10,7 +10,7 @@ import { CategoryService } from 'src/app/shared/category/category.service';
 })
 export class ProductFilterComponent implements OnInit {
   categories$: Observable<Category[]>;
-  @Input('category') category;
+  @Input('category') category: string;
 
   constructor(private categoryService: CategoryService) { }
 

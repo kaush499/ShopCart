@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from 'src/app/shared/category/category.service';
 import { NgForm } from '@angular/forms';
 import { Category } from 'src/app/shared/category/category.model';
 import { AdminProuctService } from '../admin-product.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-create',
   templateUrl: './product-create.component.html',
   styleUrls: ['./product-create.component.css']
 })
-export class ProductCreateComponent implements OnInit {
+export class ProductCreateComponent implements OnInit, OnDestroy {
   categories: Category[];
   product = {};
   id;
-  some = "qwe";
+  suscription: Subscription
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -22,7 +23,7 @@ export class ProductCreateComponent implements OnInit {
               private productService: AdminProuctService) {}
 
   ngOnInit() {
-    this.categoryService.getAllCategory()
+    this.suscription = this.categoryService.getAllCategory()
     .subscribe(categories => {
       this.categories = categories;
     })
@@ -56,6 +57,10 @@ export class ProductCreateComponent implements OnInit {
 
   onCancel() {
     this.router.navigate(['../'],{relativeTo: this.route});
+  }
+
+  ngOnDestroy() {
+    this.suscription.unsubscribe();
   }
 
 }

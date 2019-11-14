@@ -8,7 +8,7 @@ export class ProductService {
 
     constructor(private http: HttpClient) {}
     
-    getProducts() {
+    getAllProducts() {
         return this.http
         .get<{products: Product[]}>
         ('http://localhost:3000/products')
@@ -18,4 +18,19 @@ export class ProductService {
             })
         );
     }
+
+    getProduct(id: string) {
+        
+        let url = `http://localhost:3000/products/${id}`;
+        console.log(url);
+        return this.http
+        .get<{ product: Product }>
+        (url)
+        .pipe(
+            map(response => {
+                console.log(response);
+                return response.product;
+            })
+        );
+    } 
 }

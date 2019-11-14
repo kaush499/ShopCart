@@ -24,7 +24,6 @@ Product.getAllProduct = (response) => {
                  FROM products 
                  INNER JOIN category ON (products.parentCategoryId = category.categoryId)`;
     connection.query(query, (err, result) => {
-        console.log(err);
         if(err){
             response(err, null);
         }else {
@@ -36,6 +35,26 @@ Product.getAllProduct = (response) => {
         }
     });                          
 };
+
+Product.getProduct = (prdId, response) => {
+    let query = `SELECT  productId, title, imagePath, price, categoryName, categoryId
+                FROM products 
+                INNER JOIN category ON (products.parentCategoryId = category.categoryId)
+                WHERE productId = ?`;
+
+    connection.query(query, prdId, (err, result) => {
+        if(err){
+            response(err, null);
+        }else {
+            if(result.length==0 || !result){
+                response("No results found", null);
+            } else {
+                let product = result[0];
+                response(null, product);
+            }
+        }
+    })            
+}
 
 Product.updateProduct = (body, response) => {
     let query = `UPDATE products SET ? WHERE productId = ?`;
