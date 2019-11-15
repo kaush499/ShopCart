@@ -21,7 +21,6 @@ router.get("", (req, res, next) => {
 });
 
 router.get("/:id", (req, res, next) => {
-    console.log("hiiii");
     let prdId = req.params.id;
     Product.getProduct(prdId, (err, result) => {
         if(err){ 

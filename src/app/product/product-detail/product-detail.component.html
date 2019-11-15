@@ -1,20 +1,19 @@
-<!-- <div class="row">
-    <div class="col-md-6">
-        <div class="sticky-top">
-            <img [src]="product$.imagePath" class="img-fluid img-thumbnail" [alt]="product$.title">
+<div *ngIf="!isLoading" class="card mb-3">
+    <div class="row no-gutters">
+        <div class="col-md-6">
+            <img [src]="product.imagePath" class="card-img" [alt]="product.title">
+        </div>
+        <div class="col-md-6">
+        <div class="card-body">
+            <p class="card-text"><small class="text-muted">{{ product.categoryName | titlecase }}</small></p>
+            <h5 class="card-title">{{ product.title | titlecase }}</h5>
+            <h2 class="card-title">{{ product.price | currency:'USD' }}</h2>
+            <div class="add-space"></div>
+            <div class="card-text">
+                <button class="btn btn-block btn-primary">Add to Bag</button>
+            </div>
+        </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div>
-            <h2>{{ product$.title }}</h2>
-        </div>
-        <div>
-            <h5>{{ product$.price | currency:'USD' }}</h5>
-        </div>
-       <div>
-           <button class="btn btb-primary">Add to bag</button>
-       </div>
-    </div>
-</div> -->
+</div>
 
-<div>fkfls</div>

@@ -19,18 +19,14 @@ export class ProductService {
         );
     }
 
-    getProduct(id: string) {
-        
-        let url = `http://localhost:3000/products/${id}`;
-        console.log(url);
+    getProduct(id: string) {   
         return this.http
-        .get<{ product: Product }>
-        (url)
+        .get<{ product: Product }>(`http://localhost:3000/products/${id}`)
         .pipe(
             map(response => {
-                console.log(response);
+                //console.log(response);
                 return response.product;
             })
-        );
+        )
     } 
 }

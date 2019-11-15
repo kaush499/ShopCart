@@ -25,9 +25,9 @@ app.use((req, res, next) => {
 });
 
 app.use('/admin/products', adminProductRoutes);
+app.use('/products/category', categoryRoutes);
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
-app.use('/products/category', categoryRoutes);
 
 module.exports = app;
 

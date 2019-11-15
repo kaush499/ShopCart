@@ -1,0 +1,16 @@
+.card {
+    border: none;
+}
+
+img {
+    height: 300px;
+    width: 300px;
+}
+
+button {
+    width: 300px;
+}
+
+.add-space {
+    height: 70px;
+}
