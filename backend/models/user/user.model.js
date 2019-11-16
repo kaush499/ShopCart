@@ -1,4 +1,4 @@
-var connection = require('../connection/mysql_db');
+var connection = require('../../connection/mysql_db');
 
 var User = (user) => {
     this.name = user.name;

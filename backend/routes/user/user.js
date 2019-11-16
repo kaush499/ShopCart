@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcrypt');
-var User = require('../models/user.model');
+var User = require('../../models/user/user.model');
 var jwt = require('jsonwebtoken');
 
-var secret = require("../connection/secret_value");
+var secret = require("../../connection/secret_value");
 
 //creating a new User
 router.post('/signup', (req, res, next) => {
@@ -17,7 +17,7 @@ router.post('/signup', (req, res, next) => {
         };
         User.createUser(newUser, (err, userId) => {
             if(err){
-                res.status(401).json({
+                res.status(500).json({
                     error: err
                 });
             } else {

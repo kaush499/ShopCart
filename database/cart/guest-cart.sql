@@ -1,13 +1,11 @@
--- DROP TABLE guest_cart;
+DROP TABLE guest_cart;
 
--- CREATE TABLE guest_cart (
---     quantity INTEGER NOT NULL CHECK(quantity>0),
---     productId INTEGER,
---     guestId INTEGER AUTO_INCREMENT,
---     created_at TIMESTAMP DEFAULT NOW(),
---     FOREIGN KEY (productId) REFERENCES products(productId),
---     PRIMARY KEY (guestId, productId)
--- )
-
-insert into guest_cart(quantity, productId)
-values (2, 2);
+CREATE TABLE guest_cart (
+    quantity INTEGER NOT NULL CHECK(quantity>0),
+    productId INTEGER,
+    guestId INTEGER,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (productId) REFERENCES products(productId),
+    FOREIGN KEY (guestId) REFERENCES guest(guestId) ON DELETE CASCADE,
+    PRIMARY KEY (guestId, productId)
+)

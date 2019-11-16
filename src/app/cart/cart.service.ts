@@ -1,46 +1,42 @@
-// import { CartItem } from './cartItem.model';
-// import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { UserService } from '../user/user.service';
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class CartService {
-    // imgLink: string = "https://media.wired.com/photos/5b22c5c4b878a15e9ce80d92/master/pass/iphonex-TA.jpg"
+    isAuthenticated: boolean = false;
+    cartId: string;
 
-    // private cartItems: CartItem[] = [];
-    // private isCartEmpty: boolean = true;
-    // private updatedCartItems = new Subject<CartItem[]>();
-    // private updatedEmptyCartValue = new Subject<boolean>();
+    constructor(private userService: UserService,
+                private http: HttpClient) {}
+
+    // setUser() {
+    //     this.isAuthenticated = true;
+    //     this.id
+    // } 
     
-    // constructor() {}
+    async getCart(): Promise<Observable<ShoppingCart>> {
+        this.cartId = await this.getOrCreateCartId();
+        return this.db.object('/shopping-carts/' + cartId)
+          .map(x => new ShoppingCart(x.items));
+    }
+    
+    private async getOrCreateCartId(): Promise<string> { 
+        if(!this.isAuthenticated) {
+            let cartId = localStorage.getItem('cartId');
+            if (cartId) return cartId;
 
-    // getCartItems(){
-    //     return [...this.cartItems];
-    // }
+            (await this.create()).toPromise().then(result => {
+                localStorage.setItem('cartId', result.guestId.toString());
+                return result.guestId.toString();
+            });
+        } else{
+            let userId = this.userService.getUserId();
+            return  userId.toString();
+        }   
+    }
 
-    // getCartEmptyValue() {
-    //     return this.isCartEmpty;
-    // }
-
-    // getUpdatedCartEmptyValue() {
-    //     return this.updatedEmptyCartValue.asObservable();
-    // }
-
-    // getUpdatedPostListener() {
-    //     return this.updatedCartItems.asObservable();
-    // }
-
-    // addItem(id: string, title: string, imageUrl: string, price: number){
-    //     this.isCartEmpty = false;
-    //     const newItem = new CartItem(id, title, imageUrl, price, 1);
-    //     this.cartItems.push(newItem);
-    // }
-
-    // removeItem(index: number) {
-    //     this.cartItems.splice(index, 1);
-    //     this.updatedCartItems.next([...this.cartItems]);
-    //     if(this.cartItems.length == 0){
-    //         this.isCartEmpty = true;
-    //         this.updatedEmptyCartValue.next(this.isCartEmpty);
-    //     }
-    // }
+    private async create() { 
+        return this.http.get<{ guestId: number }>('http://localhost:3000/guest');
+    }
 }

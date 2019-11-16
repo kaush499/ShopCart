@@ -13,22 +13,29 @@ import { AdminAuthGuard } from './admin/admin-auth.guard';
 import { ProductCreateComponent } from './admin/admin-products/product-create/product-create.component';
 import { AdminProductListComponent } from './admin/admin-products/admin-product-list/admin-product-list.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
+import { ShowNavbarComponent } from './page-navbar/show-navbar/show-navbar.component';
+import { HideNavbarComponent } from './page-navbar/hide-navbar/hide-navbar.component';
 
 
 const routes: Routes = [
-  { path: "", component: HomeComponent },
-  { path: "signup", component: SignupComponent },
-  { path: "login", component: LoginComponent },
-  { path: "products", component: ProductListComponent },
-  { path: "products/:id", component: ProductDetailComponent },
-  { path: "cart", component: CartComponent},
-  { path: "my/orders", component: MyOrdersComponent, canActivate: [AuthGuard] },
-  { path: "admin/products", component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard], children: [
-    { path: '', component: AdminProductListComponent },
-    { path: "new", component: ProductCreateComponent },
-    { path: ":id", component: ProductCreateComponent }
+  { path: "", component: ShowNavbarComponent, children: [
+    { path: "", component: HomeComponent, pathMatch: "full" },
+    { path: "products", component: ProductListComponent },
+    { path: "products/:id", component: ProductDetailComponent },
+    
+    { path: "my/orders", component: MyOrdersComponent, canActivate: [AuthGuard] },
+    { path: "admin/products", component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard], children: [
+      { path: '', component: AdminProductListComponent },
+      { path: "new", component: ProductCreateComponent },
+      { path: ":id", component: ProductCreateComponent }
+    ]},
+    { path: "admin/orders", component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] }
   ]},
-  { path: "admin/orders", component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] }
+  { path: "", component: HideNavbarComponent, children: [
+    { path: "signup", component: SignupComponent },
+    { path: "login", component: LoginComponent },
+    { path: "cart", component: CartComponent}
+  ]} 
 ];
 
 @NgModule({
