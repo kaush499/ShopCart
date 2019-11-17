@@ -9,8 +9,18 @@
             <h5 class="card-title">{{ product.title | titlecase }}</h5>
             <h2 class="card-title">{{ product.price | currency:'USD' }}</h2>
             <div class="add-space"></div>
-            <div class="card-text">
-                <button class="btn btn-block btn-primary">Add to Bag</button>
+            <div *ngIf="cart" class="card-text">
+                <button 
+                    *ngIf="cart.getQuantity(product.productId) === 0"  
+                    class="btn btn-block btn-primary cartButton"
+                    (click)="addToCart()"
+                    >Add to Bag
+                </button>
+
+                <a
+                    *ngIf="cart.getQuantity(product.productId) !== 0"
+                    class="btn btn-block btn-success cartButton"
+                    routerLink="/cart">Go To Cart</a>
             </div>
         </div>
         </div>

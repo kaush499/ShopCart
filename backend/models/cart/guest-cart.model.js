@@ -15,27 +15,21 @@ GuestCart.addNewProduct = (cartItem, response) => {
 };
 
 GuestCart.getCart = (guestId, response) => {
-    let query = `SELECT productId, title, imagePath, price, guestId, quantity
+    let query = `SELECT products.productId, title, imagePath, price, quantity
                  FROM guest_cart
-                 NATURAL JOIN products
+                 INNER JOIN products ON(products.productId = guest_cart.productId)
                  WHERE guestId = ?`;
 
-    connection.query(query, guestId, (err, result) => {
+    connection.query(query, [guestId], (err, result) => {
         if(err) response(err, null);
-        else {
-            if(result.length==0 || !result){
-                response("No results found", null);
-            } else {
-                response(null, result);
-            }
-        }
+        else response(null, result);
     });             
 };
 
 GuestCart.updateCartItem = (body, response) => {
-    let query = `UPDATE guest_cart SET ? WHERE guestId = ?`;
+    let query = `UPDATE guest_cart SET quantity = ? WHERE guestId = ? AND productId = ?`;
 
-    connection.query(query, [body.updatedCartItem, body.guestId], (err, result) => {
+    connection.query(query, [body.quantity, body.guestId, body.productId], (err, result) => {
         if(err) response(err, null);
         else response(null, true);
     })

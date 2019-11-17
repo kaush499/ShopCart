@@ -9,9 +9,12 @@ router.get('', (req, res, next) => {
                 err: err
             });
         } else{
+            console.log(guestId);
             res.status(200).json({
                 guestId: guestId
             });
         }
     });
 });
+
+module.exports = router;

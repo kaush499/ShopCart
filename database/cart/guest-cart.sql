@@ -5,7 +5,7 @@ CREATE TABLE guest_cart (
     productId INTEGER,
     guestId INTEGER,
     created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY (productId) REFERENCES products(productId),
+    FOREIGN KEY (productId) REFERENCES products(productId) ON DELETE CASCADE,
     FOREIGN KEY (guestId) REFERENCES guest(guestId) ON DELETE CASCADE,
     PRIMARY KEY (guestId, productId)
 )

@@ -34,7 +34,7 @@ export class UserService {
 
     saveUserData(userId: number, userName: string, isAdmin: boolean) {
         const adminVal = isAdmin == false ? "false" : "true";
-        localStorage.setItem("UserId", userId.toString());
+        localStorage.setItem("userId", userId.toString());
         localStorage.setItem("name", userName);
         localStorage.setItem("isAdmin", adminVal);
     }

@@ -4,4 +4,10 @@ export class CartItem {
     price: number;
     productId: number;
     quantity: number;
+
+    constructor(init?: Partial<CartItem>) {
+        Object.assign(this, init);
+    }
+
+    get totalPrice() { return this.price * this.quantity; }
 }

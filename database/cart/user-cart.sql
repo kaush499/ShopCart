@@ -5,7 +5,7 @@ CREATE TABLE user_cart (
     productId INTEGER,
     userId INTEGER,
     created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY (productId) REFERENCES products(productId),
-    FOREIGN KEY (userId) REFERENCES user(userId),
+    FOREIGN KEY (productId) REFERENCES products(productId) ON DELETE CASCADE,
+    FOREIGN KEY (userId) REFERENCES user(userId) ON DELETE CASCADE,
     PRIMARY KEY (userId, productId)
 )
