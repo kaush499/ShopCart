@@ -33,7 +33,7 @@ router.put("/:id/:prdId", (req, res, next) => {
 
     GuestCart.updateCartItem(body, (err, result) => {
         if(err) res.status(500).send({ err: err });
-        else res.status(201);
+        else res.status(200).send();
     });
 });
 
@@ -45,7 +45,7 @@ router.delete("/:id/:prdId", (req, res, next) => {
 
     GuestCart.deleteCartItem(body, (err, result) => {
         if(err) res.status(500).send({ err: err });
-        else res.status(201);
+        else res.status(200).send();
     });
 });
 
@@ -54,7 +54,7 @@ router.delete("/:id", (req, res, next) => {
 
     GuestCart.deleteCart(guestId, (err, result) => {
         if(err) res.status(500).send({ err: err });
-        else res.status(201);
+        else res.status(200).send();
     });
 });
 

@@ -17,4 +17,12 @@ router.get('', (req, res, next) => {
     });
 });
 
+router.delete('/:id', (req, res, next) => {
+    let guestId = req.params.id;
+    Guest.deleteGuest(guestId, (err, result) => {
+        if(err) res.status(500).send({ err: err });
+        else res.status(200).send();
+    })
+})
+
 module.exports = router;

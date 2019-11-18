@@ -26,6 +26,7 @@ import { ShowNavbarComponent } from './page-navbar/show-navbar/show-navbar.compo
 import { HideNavbarComponent } from './page-navbar/hide-navbar/hide-navbar.component';
 import { NavbarNavShowComponent } from './header/navbar-nav-show/navbar-nav-show.component';
 import { NavbarNavHideComponent } from './header/navbar-nav-hide/navbar-nav-hide.component';
+import { CartItemComponent } from './cart/cart-item/cart-item.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { NavbarNavHideComponent } from './header/navbar-nav-hide/navbar-nav-hide
     ShowNavbarComponent,
     HideNavbarComponent,
     NavbarNavShowComponent,
-    NavbarNavHideComponent
+    NavbarNavHideComponent,
+    CartItemComponent
   ],
   imports: [
     BrowserModule,

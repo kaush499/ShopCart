@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CartService } from './cart.service';
-import { Subscription } from 'rxjs';
+import { Cart } from '../shared/cart/cart.model';
 
 @Component({
   selector: 'app-cart',
@@ -8,21 +8,17 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit, OnDestroy {
-    // isCartEmpty: boolean;
-    // private suscription: Subscription;
+  cart: Cart;
 
   constructor(private cartService: CartService) { }
 
-  ngOnInit() {
-    // this.isCartEmpty = this.cartService.getCartEmptyValue();
-    // this.suscription = this.cartService.getUpdatedCartEmptyValue()
-    //   .subscribe((isEmpty: boolean) => {
-    //     this.isCartEmpty = isEmpty;
-    //   })
+  async ngOnInit() {
+    this.cart = await this.cartService.getCart();
+  
   }
 
   ngOnDestroy() {
-    // this.suscription.unsubscribe();
+    
   }
 
 }

@@ -5,7 +5,7 @@ export class Cart {
 
     constructor(private itemsMap: CartItem[]) {
         this.itemsMap = itemsMap || [];
-
+        
         itemsMap.forEach(item => {
             this.items.push(new CartItem(item));
         });

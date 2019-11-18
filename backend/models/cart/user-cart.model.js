@@ -16,20 +16,14 @@ UserCart.addNewProduct = (cartItem, response) => {
 };
 
 UserCart.getCart = (userId, response) => {
-    let query = `SELECT productId, title, imagePath, price, quantity
+    let query = `SELECT products.productId, title, imagePath, price, quantity
                  FROM user_cart
-                 NATURAL JOIN products
+                 INNER JOIN products ON(products.productId = user_cart.productId)
                  WHERE userId = ?`;
 
     connection.query(query, userId, (err, result) => {
         if(err) response(err, null);
-        else {
-            if(result.length==0 || !result){
-                response("No results found", null);
-            } else {
-                response(null, result);
-            }
-        }
+        else response(null, result);
     });             
 };
 

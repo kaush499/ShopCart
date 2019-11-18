@@ -10,4 +10,5 @@ export class CartItem {
     }
 
     get totalPrice() { return this.price * this.quantity; }
+
 }

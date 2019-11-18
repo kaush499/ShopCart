@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AuthData } from './auth-data.model';
 import { UserService } from '../user/user.service';
+import { CartService } from '../cart/cart.service';
 
 @Injectable({ providedIn: "root" })
 
@@ -15,7 +16,8 @@ export class AuthService {
 
     constructor(private http: HttpClient,
                 private userService: UserService,
-                private router: Router){}
+                private router: Router,
+                private cartService: CartService){}
 
     getToken () {
         return this.token;
@@ -29,18 +31,19 @@ export class AuthService {
     return this.authStatusListener.asObservable();
     }
 
-    createUser(name: string, email: string, password: string){
+    async createUser(name: string, email: string, password: string){
         const newUser: AuthData = {name: name, email: email, password: password};
         this.http
         .post<{ message: string, token: string, userId: number, expiresIn: number }>(
             "http://localhost:3000/users/signup",
             newUser
         )
-        .subscribe(response => {
+        .subscribe(async response => {
             const token = response.token;
             this.token = token;
             if (token) {
-                this.userService.setUser(response.userId, name, 0);        
+                this.userService.setUser(response.userId, name, 0);   
+                let resp = await this.cartService.setUser(response.userId);     
                 const expiresInDuration = response.expiresIn;
                 this.setAuthTimer(expiresInDuration);
                 this.isAuthenticated = true;
@@ -57,18 +60,19 @@ export class AuthService {
         })
     }
 
-    login(email: string, password: string) {
+    async login(email: string, password: string) {
         const user = {email: email, password: password};
         this.http
         .post<{token: string, userId: number, name: string, isAdmin: number, expiresIn: number}>(
             "http://localhost:3000/users/login",
             user
         )
-        .subscribe(response => {
+        .subscribe(async response => {
             const token = response.token;
             this.token = token;
             if (token) {
                 this.userService.setUser(response.userId, response.name, response.isAdmin);
+                let resp = await this.cartService.setUser(response.userId);
                 const expiresInDuration = response.expiresIn;
                 this.setAuthTimer(expiresInDuration);
                 this.isAuthenticated = true;
@@ -86,6 +90,7 @@ export class AuthService {
     }
 
     logout() {
+        this.cartService.removeUser();
         this.token = null;
         this.isAuthenticated = false;
         this.authStatusListener.next(false);
@@ -102,6 +107,7 @@ export class AuthService {
         const now = new Date();
         const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
         if (expiresIn > 0) {
+            this.cartService.setUser(Number(localStorage.getItem("userId")));
             this.token = authInformation.token;
             this.isAuthenticated = true;
             this.userService.autoSetUser();

@@ -5,6 +5,7 @@ import { Cart } from '../shared/cart/cart.model';
 import { map } from 'rxjs/operators';
 import { CartItem } from '../shared/cart/cart-item.model';
 import { Product } from '../shared/product/product.model';
+import { CartFunction } from './cart-function.service';
 
 @Injectable({ providedIn: "root" })
 export class CartService {
@@ -13,7 +14,8 @@ export class CartService {
     private cart: Cart
 
     constructor(private userService: UserService,
-                private http: HttpClient) {}
+                private http: HttpClient,
+                private cartFunction: CartFunction) {}
 
     
     async getCart(): Promise<Cart> {
@@ -30,15 +32,57 @@ export class CartService {
                     return this.cart
                 });
     }
+
+    async setUser(userId: number) {
+        this.isAuthenticated = true;
+        const guestId = this.cartId;
+        this.cartId = userId.toString();
+        if(this.cart){
+            this.http.get<{ items: CartItem[] }>(`http://localhost:3000/user-cart/${userId}`)
+            .subscribe(async response => {
+                let newCart = response.items;
+                let itemsToAdd = [];
+                this.cart.items.forEach(item => {
+                    let newItem = newCart.find(x => item.productId === x.productId);
+                    if(!newItem) {
+                        itemsToAdd.push(item);
+                        newCart.push(item);
+                    }
+                });
+                
+        
+                this.cart.items = [];
+                // let cartUrl = `http://localhost:3000/user-cart/${userId}`
+                // for(let i = 0; i < itemsToAdd.length; i++) {
+                //     let resp = await this.http.post(cartUrl, {item: itemsToAdd[i]}).toPromise();
+                // }
+                newCart.forEach(item => {
+                    this.cart.items.push(new CartItem(item));
+                });
+                this.cartFunction.addGuestToUser(itemsToAdd, userId);
+                
+            });
+            if(guestId) this.cartFunction.deleteGuest(guestId);
+            return true;
+        }
+        
+    }
+
+    removeUser() {
+        this.isAuthenticated = false;
+        this.cart.items = [];
+        this.cart = null;
+        this.cartId = null;
+    }
     
     private async getOrCreateCartId(): Promise<string> { 
         if(!this.isAuthenticated) {
-            let cartId = await this.retrieveCart();
+            let cartId = await this.cartFunction.retrieveCart();
             if (cartId) return cartId;
 
-            (await this.create()).toPromise().then(result => {
+            (await this.cartFunction.createGuest()).toPromise().then(result => {
                 this.cartId = result.guestId.toString();
-                this.storeCart(this.cartId);
+                this.cartFunction.storeCart(this.cartId);
                 return this.cartId;
             });
         } else{
@@ -49,40 +93,34 @@ export class CartService {
 
     addNewProduct(product: Product) {
         let cartUrl = this.getCartUrl();
+        console.log(cartUrl);
         this.http
         .post(cartUrl, {productId: product.productId})
         .subscribe(response => {
-            let newCartItem = this.formNewCartItem(product, 1);
+            let newCartItem = this.cartFunction.formNewCartItem(product, 1);
             this.cart.items.push(new CartItem(newCartItem));
         });
     }
 
-    private async create() { 
-        return this.http.get<{ guestId: number }>('http://localhost:3000/guest')
+    updateQuantity(productId: number, flag: number){
+        let item = this.cart.items.find(x => x.productId == productId);
+        const quantity = item.quantity + flag;
+        let cartUrl = this.getCartUrl() + `/${productId}`;
+        this.http.put(cartUrl, {quantity: quantity})
+            .subscribe(response => {
+                let cartItem = this.cart.items.find(x => x.productId == productId);
+                cartItem.quantity = quantity;
+            })
     }
 
-    private storeCart(guestId: string) {
-        const now = new Date();
-        const cartExpiration = new Date(now.getTime() + 3*24*3600*1000);
-        let cart = {
-            guestId: guestId,
-            cartExpiration: cartExpiration
-        };
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-    
-    private async retrieveCart() {
-        let cart = localStorage.getItem('cart');
-        if(cart){
-            let guestCart = JSON.parse(cart);
-            const now = new Date();
-            const cartExp = new Date(guestCart.cartExpiration);
-            if(cartExp.getTime() - now.getTime() > 0) return guestCart.guestId;
-
-            localStorage.removeItem('cart');
-            return null;
-        }
-        return null;   
+    removeCartItem(productId: number) {
+        let cartUrl = this.getCartUrl() + `/${productId}`;
+        console.log(cartUrl);
+        this.http.delete(cartUrl)
+        .subscribe(response => {
+            let deletedCartItemIndex = this.cart.items.findIndex(x => x.productId == productId);
+            this.cart.items.splice(deletedCartItemIndex, 1);
+        });
     }
 
     private getCartUrl() {
@@ -91,13 +129,4 @@ export class CartService {
         else return cartUrl + `guest-cart/${this.cartId}`;
     }
 
-    private formNewCartItem(product: Product, quantity: number) {
-        return {
-            productId: product.productId,
-            price: product.price,
-            title: product.title,
-            imagePath: product.imagePath,
-            quantity: quantity
-        };
-    }
 }

@@ -1,0 +1,32 @@
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row no-gutters">
+        <div class="col-md-4">
+        <img [src]="item.imagePath" class="card-img" [alt]="item.title">
+        </div>
+        <div class="col-md-8">
+        <div class="card-body">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <div class="row no-gutters card-text">
+                <div class="col-2">
+                    <button 
+                    (click)="decreaseQuantity()"
+                    [disabled]="item.quantity === 1"
+                    class="btn btn-secondary btn-block">-</button> 
+                </div>
+                <div class="col text-center">
+                    {{ item.quantity }} 
+                </div>
+                <div class="col-2">
+                    <button 
+                    (click)="increaseQuantity()"
+                    class="btn btn-secondary btn-block">+</button> 
+                </div>
+            </div>
+            <h4 class="card-title">{{ item.totalPrice | currency:'USD' }}</h4>
+            <button 
+                (click)="removeItem()"
+                class="btn btn-danger btn-sm">Remove</button>
+        </div>
+        </div>
+    </div>
+</div>
