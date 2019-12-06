@@ -99,7 +99,7 @@ export class AuthService {
         this.router.navigate(["/"]);
     }
 
-    autoAuthUser() {
+    async autoAuthUser() {
         const authInformation = this.getAuthData();
         if (!authInformation) {
             return;
@@ -107,12 +107,15 @@ export class AuthService {
         const now = new Date();
         const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
         if (expiresIn > 0) {
-            this.cartService.setUser(Number(localStorage.getItem("userId")));
             this.token = authInformation.token;
             this.isAuthenticated = true;
             this.userService.autoSetUser();
             this.setAuthTimer(expiresIn / 1000);
-            this.authStatusListener.next(true);
+            this.cartService.setUser(Number(localStorage.getItem("userId")))
+            .then(val => {
+                this.authStatusListener.next(true);
+            })
+            
         } else {
             this.clearAuthData();
         }

@@ -9,19 +9,20 @@ var checkIsAdmin = require('../../middleware/check-isAdmin');
 // For getting all products from database
 router.get("",checkAuth, checkIsAdmin, (req, res, next) => {
     Product.getAllProduct((err, result) => {
-        if(err){ 
-            
-            res.status(500).send({
-                message: err
-            });
-        } else {
-            res.status(200).json({
-                product: result
-            });
-        }
+        if(err) res.status(400).send({ message: err });
+        else res.status(200).json({ product: result });
     });
 
 });
+
+//For getting a specific product based on its id
+router.get("/:id", checkAuth, checkIsAdmin, (req, res, next) => {
+    const prdId = req.params.id;
+    Product.getProduct(prdId, (err, result) => {
+        if(err) res.status(400).send(err);
+        else res.status(200).json({product: result});
+    })
+})
 
 //For adding a product into the database
 router.post("", checkAuth, checkIsAdmin, (req, res, next) => {

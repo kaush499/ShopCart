@@ -10,3 +10,4 @@ CREATE TABLE user (
 );
 
 -- Admin : name = kau and email=kau@123.com and password=123456
+-- user: tom. email:tom@123.com. password: qwerty

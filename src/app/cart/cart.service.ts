@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { CartItem } from '../shared/cart/cart-item.model';
 import { Product } from '../shared/product/product.model';
 import { CartFunction } from './cart-function.service';
+import { promise } from 'protractor';
 
 @Injectable({ providedIn: "root" })
 export class CartService {
@@ -19,8 +20,11 @@ export class CartService {
 
     
     async getCart(): Promise<Cart> {
-        if(this.cart) return this.cart;
-
+        if(this.cart){
+            console.log("1122");
+            return this.cart;
+        } 
+        console.log("1144");
         this.cartId = await this.getOrCreateCartId();
         let cartUrl = this.getCartUrl();
 
@@ -33,39 +37,30 @@ export class CartService {
                 });
     }
 
-    async setUser(userId: number) {
+    async setUser(userId: number): Promise<boolean>  {
         this.isAuthenticated = true;
         const guestId = this.cartId;
         this.cartId = userId.toString();
-        if(this.cart){
-            this.http.get<{ items: CartItem[] }>(`http://localhost:3000/user-cart/${userId}`)
-            .subscribe(async response => {
-                let newCart = response.items;
-                let itemsToAdd = [];
-                this.cart.items.forEach(item => {
-                    let newItem = newCart.find(x => item.productId === x.productId);
-                    if(!newItem) {
-                        itemsToAdd.push(item);
-                        newCart.push(item);
-                    }
-                });
-                
-        
-                this.cart.items = [];
-                // let cartUrl = `http://localhost:3000/user-cart/${userId}`
-                // for(let i = 0; i < itemsToAdd.length; i++) {
-                //     let resp = await this.http.post(cartUrl, {item: itemsToAdd[i]}).toPromise();
-                // }
-                newCart.forEach(item => {
-                    this.cart.items.push(new CartItem(item));
-                });
-                this.cartFunction.addGuestToUser(itemsToAdd, userId);
-                
+        if(this.cart){ 
+            let cartItems = this.cart.items.map(item => {
+                return {
+                    productId: item.productId,
+                    quantity: item.quantity,
+                    userId: userId
+                };
             });
-            if(guestId) this.cartFunction.deleteGuest(guestId);
-            return true;
-        }
-        
+            this.cart.items = [];
+            this.cart = null;
+
+            this.cartFunction.deleteGuest(guestId);
+
+            this.http
+            .post("http://localhost:3000/user-cart/addBunch",{items: cartItems})
+            .subscribe(response => { 
+                return true;
+            });
+            
+        } else return true;
     }
 
     removeUser() {
@@ -93,7 +88,6 @@ export class CartService {
 
     addNewProduct(product: Product) {
         let cartUrl = this.getCartUrl();
-        console.log(cartUrl);
         this.http
         .post(cartUrl, {productId: product.productId})
         .subscribe(response => {
@@ -115,7 +109,6 @@ export class CartService {
 
     removeCartItem(productId: number) {
         let cartUrl = this.getCartUrl() + `/${productId}`;
-        console.log(cartUrl);
         this.http.delete(cartUrl)
         .subscribe(response => {
             let deletedCartItemIndex = this.cart.items.findIndex(x => x.productId == productId);

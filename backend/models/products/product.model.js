@@ -30,9 +30,9 @@ Product.getAllProduct = (response) => {
 
 Product.getProduct = (prdId, response) => {
     let query = `SELECT  productId, title, imagePath, price, categoryName, categoryId
-                FROM products 
-                INNER JOIN category ON (products.parentCategoryId = category.categoryId)
-                WHERE productId = ?`;
+                 FROM products 
+                 INNER JOIN category ON (products.parentCategoryId = category.categoryId)
+                 WHERE productId = ?`;
 
     connection.query(query, prdId, (err, result) => {
         if(err){

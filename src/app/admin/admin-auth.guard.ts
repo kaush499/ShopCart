@@ -8,6 +8,7 @@ export class AdminAuthGuard implements CanActivate {
     constructor(private userService: UserService,
                 private router: Router) {}
 
+    // For allowing only admins to certain pages            
     canActivate(): boolean {
         const isAdmin = this.userService.getIsAdmin();
         if(!isAdmin){

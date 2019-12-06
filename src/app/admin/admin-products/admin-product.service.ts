@@ -51,7 +51,14 @@ export class AdminProuctService {
     }
 
     getAll() {
-        return [...this.products];
+        return this.http
+            .get<{product: Product[]}>
+            ("http://localhost:3000/admin/products")
+            .subscribe(response => {
+                this.products = response.product;
+                this.prdInitialised = true;
+                this.productsUpdated.next([...this.products]);
+            });
     }
         
 

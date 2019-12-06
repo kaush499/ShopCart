@@ -6,6 +6,20 @@ var UserCart = (cartItem) => {
     this.userId = cartItem.userId;
 };
 
+
+UserCart.movePrdFromGuestToUser = (cartItem, response) => {
+    let query = `INSERT INTO user_cart SET ?`;
+
+    connection.query(query, cartItem, (err, result) => {
+        if(err) {
+            if( err.errno === 1062) {
+                response(null, true)
+            }else response(err, null);
+        } 
+        else response(null, true);
+    })
+}
+
 UserCart.addNewProduct = (cartItem, response) => {
     let query = `INSERT INTO user_cart SET ?`;
 
