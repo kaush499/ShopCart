@@ -1,6 +1,8 @@
 import { Directive, EventEmitter, Input, Output, Injectable, ElementRef, Renderer2, PipeTransform } from '@angular/core';
 import { Product } from 'src/app/shared/product/product.model';
 
+// main functionalities of these are taken from ng-bootstrap visit for more understanding
+
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 export const compare = (v1, v2) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
@@ -27,6 +29,7 @@ export class NgbdSortableHeader {
 
     constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
   
+    // used for sorting and rotating the items (desc or asc) and also adding up or down arrow
     rotate() {
       this.direction = rotate[this.direction];
       this.sort.emit({column: this.sortable, direction: this.direction});
@@ -45,6 +48,7 @@ export class NgbdSortableHeader {
 
 @Injectable({providedIn: 'root'})
 export class TableService {
+  // sorting function
     SortPrd(products: Product[], {column, direction}: SortEvent) {
         if (direction === '') {
             return products;
@@ -56,6 +60,7 @@ export class TableService {
         }
     }
 
+    // searching and returning the filtered products according to the keyword
     search(text: string, pipe: PipeTransform, products: Product[]) {
       return products.filter(product => {
         const term = text.toLowerCase();

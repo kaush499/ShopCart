@@ -6,12 +6,13 @@ import { AdminProuctService } from './admin-product.service';
   templateUrl: './admin-products.component.html',
   styleUrls: ['./admin-products.component.css']
 })
+
+// this component is  only for initialising all products before going to the product list
 export class AdminProductsComponent implements OnInit {
 
     constructor(private productService: AdminProuctService) {}
 
     ngOnInit() {
-      console.log("inside admin prd");
       this.productService.initialiseProducts();
     }
  

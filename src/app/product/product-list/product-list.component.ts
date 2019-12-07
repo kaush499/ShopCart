@@ -17,9 +17,12 @@ export class ProductListComponent implements OnInit {
   constructor(private productService: ProductService,
               private route: ActivatedRoute) {}
 
+  // gets all products from the database
   ngOnInit() {
     this.productService.getAllProducts()
     .pipe(
+      // uses switchmap for using 2 observables 1 for recieving all prd and 
+      // 2nd for seeing which category is choosen to filter the prd accordingly
       switchMap(products => {
         this.products = products;
         return this.route.queryParamMap;

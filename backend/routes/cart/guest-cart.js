@@ -11,6 +11,7 @@ router.get("/:id", (req, res, next) => {
     }) ;
 })
 
+// adding a new item to cart
 router.post("/:id", (req, res, next) => {
     let cartItem = {
         guestId: req.params.id,
@@ -24,6 +25,7 @@ router.post("/:id", (req, res, next) => {
     });
 });
 
+// updating the item in the cart
 router.put("/:id/:prdId", (req, res, next) => {
     let body = {
         productId: req.params.prdId,
@@ -37,6 +39,7 @@ router.put("/:id/:prdId", (req, res, next) => {
     });
 });
 
+// removing an item from cart
 router.delete("/:id/:prdId", (req, res, next) => {
     let body = {
         productId: req.params.prdId,
@@ -49,6 +52,7 @@ router.delete("/:id/:prdId", (req, res, next) => {
     });
 });
 
+// deleting the entire cart
 router.delete("/:id", (req, res, next) => {
     let guestId = req.params.id;
 

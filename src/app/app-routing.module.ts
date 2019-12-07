@@ -15,6 +15,7 @@ import { AdminProductListComponent } from './admin/admin-products/admin-product-
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ShowNavbarComponent } from './page-navbar/show-navbar/show-navbar.component';
 import { HideNavbarComponent } from './page-navbar/hide-navbar/hide-navbar.component';
+import { CheckOutComponent } from './check-out/check-out.component';
 
 
 const routes: Routes = [
@@ -34,7 +35,8 @@ const routes: Routes = [
   { path: "", component: HideNavbarComponent, children: [
     { path: "signup", component: SignupComponent },
     { path: "login", component: LoginComponent },
-    { path: "cart", component: CartComponent}
+    { path: "cart", component: CartComponent},
+    { path: "check-out", component: CheckOutComponent, canActivate: [AuthGuard] }
   ]} 
 ];
 

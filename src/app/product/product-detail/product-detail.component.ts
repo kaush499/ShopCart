@@ -20,8 +20,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute,
-              private cartService: CartService) { }
+              private cartService: CartService) {}
 
+  // getting the specific prd from database
   async ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.suscription = this.productService.getProduct(this.id)
@@ -33,6 +34,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.cart = await this.cartService.getCart();  
   }
 
+  // product added to cart
   addToCart() {
     this.cartService.addNewProduct(this.product);
   }

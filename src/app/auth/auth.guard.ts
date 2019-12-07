@@ -10,14 +10,17 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate{
     constructor(private authService: AuthService,
                 private router: Router) {}
+    
+    // activates certain routes only if user is authenticated
 
     canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
-    ): boolean | Observable<boolean> | Promise<boolean> {
+    ) {
         const isAuth = this.authService.getIsAuth();
+        console.log(isAuth);
         if(!isAuth){
-            this.router.navigate(['/login']);
+            this.router.navigate(['/login'],{queryParams: {"redirectUrl": state.url}});
         }
         return isAuth;
     }            

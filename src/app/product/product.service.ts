@@ -8,6 +8,7 @@ export class ProductService {
 
     constructor(private http: HttpClient) {}
     
+    // getting all the products
     getAllProducts() {
         return this.http
         .get<{products: Product[]}>
@@ -19,6 +20,7 @@ export class ProductService {
         );
     }
 
+    // getting only the single prd from its prdId
     getProduct(id: string) {   
         return this.http
         .get<{ product: Product }>(`http://localhost:3000/products/${id}`)

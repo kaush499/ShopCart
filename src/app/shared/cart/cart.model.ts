@@ -11,11 +11,13 @@ export class Cart {
         });
     };
 
+    // getting quantity of specific item in the cart
     getQuantity(productId: number) {
         let item = this.items.find(x => x.productId === productId);
         return item ? item.quantity : 0;
       }
-      
+     
+    // getting the price of all items in cart and summing it
     get totalPrice() {
         let sum = 0;
         this.items.forEach(x => {
@@ -24,6 +26,7 @@ export class Cart {
         return sum;
     }
     
+    // getting the total number of items in cart
     get totalItemsCount() {
         return this.items.length;
     }

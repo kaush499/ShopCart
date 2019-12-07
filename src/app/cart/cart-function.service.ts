@@ -8,6 +8,7 @@ export class CartFunction {
 
     constructor(private http: HttpClient) {}
 
+    // stores the cart id and its expiry value to local storage
     storeCart(guestId: string) {
         const now = new Date();
         const cartExpiration = new Date(now.getTime() + 3*24*3600*1000);
@@ -18,6 +19,7 @@ export class CartFunction {
         localStorage.setItem('cart', JSON.stringify(cart));
     }
     
+    // retrieves the cart from the local storage
     async retrieveCart() {
         let cart = localStorage.getItem('cart');
         if(cart){
@@ -32,10 +34,12 @@ export class CartFunction {
         return null;   
     }
 
+    // creates new guest id from server
     async createGuest() { 
         return this.http.get<{ guestId: number }>('http://localhost:3000/guest')
     }
 
+    // returns the newly formed cartItem
     formNewCartItem(product: Product, quantity: number) {
         return {
             productId: product.productId,
@@ -46,13 +50,7 @@ export class CartFunction {
         };
     }
 
-    async addGuestToUser(items: CartItem[], userId: number) {
-        let cartUrl = `http://localhost:3000/user-cart/${userId}`
-        for(let i = 0; i < items.length; i++) {
-            let response = await this.http.post(cartUrl, {item: items[i]}).toPromise();
-        }
-    }
-
+    // deletes guest from server
     deleteGuest(guestId: string) {
         let cartUrl = `http://localhost:3000/guest/${guestId}`
         this.http.delete(cartUrl)

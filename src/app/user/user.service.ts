@@ -24,6 +24,7 @@ export class UserService {
         return this.userStatus.asObservable();
     }
 
+    // sets the user data after the authentication 
     setUser(userId: number, userName: string, isAdmin: number) {
         this.userId = userId;
         this.userName = userName;
@@ -32,6 +33,7 @@ export class UserService {
         this.userStatus.next(userName);
     }
 
+    // saves the user data in the local storage
     saveUserData(userId: number, userName: string, isAdmin: boolean) {
         const adminVal = isAdmin == false ? "false" : "true";
         localStorage.setItem("userId", userId.toString());
@@ -39,6 +41,7 @@ export class UserService {
         localStorage.setItem("isAdmin", adminVal);
     }
 
+    // auto sets the user by looking into localstorage and retrieving user data if present 
     autoSetUser() {
         const userName = localStorage.getItem("name");
         const userId = localStorage.getItem("userId");
@@ -49,6 +52,7 @@ export class UserService {
         this.userStatus.next(userName);
     }
 
+    // clearing user data on logging out
     clearUserData() {
         localStorage.removeItem("name");
         localStorage.removeItem("userId");

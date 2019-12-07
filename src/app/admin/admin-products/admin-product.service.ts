@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/shared/product/product.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: "root" })
 export class AdminProuctService {
@@ -13,30 +14,22 @@ export class AdminProuctService {
     constructor(private http: HttpClient,
                 private router: Router) {}
 
-
+        // observable for the updated prds
     getProductsUpdated() {
         return this.productsUpdated.asObservable();
     }
 
-    getProducts() {
-        if(this.products){
-            return [...this.products];
-        }else {
-            this.router.navigate(['../']);
-        }
-    }
-
+    // gets the specific prd from server by its id
     getProductById(id: number){
-        if(this.products.length !== 0){
-            return this.products.find(prd => {
-                return prd.productId == id;
-            });
-        }else {
-            this.router.navigate(['../']);
-        }
-        
+        return this.http
+                .get<{product: Product}>
+                (`http://localhost:3000/admin/products/${id}`)
+                .pipe(map(response => {
+                    return response.product;
+                }));
     }
 
+    // initialises the prds before entering prds list
     initialiseProducts() {
         if(!this.prdInitialised){
             this.http
@@ -50,19 +43,15 @@ export class AdminProuctService {
         }
     }
 
-    getAll() {
-        return this.http
-            .get<{product: Product[]}>
-            ("http://localhost:3000/admin/products")
-            .subscribe(response => {
-                this.products = response.product;
-                this.prdInitialised = true;
-                this.productsUpdated.next([...this.products]);
-            });
+    // returns all products
+    // this is all is done so that the server is not called again and agian and we have list 
+    // prds here itself on client side
+    getAllProducts() {
+        return [...this.products];
     }
         
-
-    addProduct(product) {
+    // adding prd
+    addProduct(product: any) {
         const newProduct = {
             title: product.title,
             imagePath: product.imageUrl,
@@ -87,6 +76,7 @@ export class AdminProuctService {
         });
     }
 
+    // Updating prd
     editProduct(product, id) {
         const prdId = Number(id);
         const updatedProduct = {
@@ -113,6 +103,7 @@ export class AdminProuctService {
         })
     }
 
+    // deleting prd
     deleteProduct(id: string) {
         const prdId = Number(id);
         this.http

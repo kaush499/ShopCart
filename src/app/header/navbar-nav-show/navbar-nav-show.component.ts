@@ -15,25 +15,18 @@ export class NavbarNavShowComponent implements OnInit, OnDestroy {
   userName: string;
   isAdmin: boolean;
   private authListenerSubs: Subscription;
-  private userSubs: Subscription;
   cart: Cart;
 
   constructor(private authService: AuthService,
               private userService: UserService,
               private cartService: CartService) {}
 
+  // initiates user and authentication and sets the value of the cart
+  // sets up the auth observable listener
   async ngOnInit() {
       this.userIsAuthenticated = this.authService.getIsAuth();
       this.userName = this.userService.getUserName();
       this.isAdmin = this.userService.getIsAdmin();
-
-    //   this.userSubs = this.userService
-    //   .getUserStatus()
-    //   .subscribe(userName => {
-    //       console.log(userName);
-    //       this.userName = userName;
-    //       this.isAdmin = this.userService.getIsAdmin();
-    //   });
 
       this.authListenerSubs = this.authService
       .getAuthStatusListener()
@@ -51,7 +44,6 @@ export class NavbarNavShowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
       this.authListenerSubs.unsubscribe();
-    //   this.userSubs.unsubscribe();
   }
 
 }

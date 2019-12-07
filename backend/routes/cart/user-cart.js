@@ -13,6 +13,7 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
+// adding items from guest cart to user cart when the user logins or signups
 router.post("/addBunch", (req, res, next) => {
     let cartItems = req.body.items;
     let flag = 0;
@@ -27,6 +28,7 @@ router.post("/addBunch", (req, res, next) => {
     });
 });
 
+// adding a new item to cart
 router.post("/:id", (req, res, next) => {
     let cartItem = {
         userId: req.params.id,
@@ -40,6 +42,7 @@ router.post("/:id", (req, res, next) => {
     });
 });
 
+// updating the item in the cart
 router.put("/:id/:prdId", (req, res, next) => {
     let body = {
         productId: req.params.prdId,
@@ -53,6 +56,7 @@ router.put("/:id/:prdId", (req, res, next) => {
     });
 });
 
+// removing an item from cart
 router.delete("/:id/:prdId", (req, res, next) => {
     let body = {
         productId: req.params.prdId,

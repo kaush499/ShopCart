@@ -33,7 +33,8 @@ export class AdminProductListComponent implements OnInit, OnDestroy {
   constructor(private productService: AdminProuctService,
               private tableService: TableService,
               pipe: DecimalPipe) {
-
+      
+      // for filtering with the keyword in the search bar
       this.filter.valueChanges.pipe(
         startWith(''),
         map(text => this.tableService.search(text, pipe, [...this.products]))
@@ -45,7 +46,8 @@ export class AdminProductListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.products = this.productService.getAll();
+    // getting all products from server
+    this.products = this.productService.getAllProducts();
     this.subscription = this.productService.getProductsUpdated()
     .subscribe(products => {
       this.products = products;
@@ -58,6 +60,7 @@ export class AdminProductListComponent implements OnInit, OnDestroy {
     this.onPageChange();
   }
 
+  // for sorting the items respective to column
   onSort({column, direction}: SortEvent) {
     this.headers.forEach(header => {
       if (header.sortable !== column) {
@@ -69,6 +72,7 @@ export class AdminProductListComponent implements OnInit, OnDestroy {
     this.onPageChange();
   }
 
+  // used for pagination of the product list
   onPageChange() {
     this.itemsPag = this.items.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }

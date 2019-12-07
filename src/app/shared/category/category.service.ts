@@ -9,6 +9,7 @@ export class CategoryService {
 
     constructor(private http: HttpClient) {}
 
+    // making requests from database for all categories
     getAllCategory() {
         return this.http
         .get<{category: Category[]}>("http://localhost:3000/products/category")

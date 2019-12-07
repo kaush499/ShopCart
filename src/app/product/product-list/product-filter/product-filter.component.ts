@@ -8,6 +8,8 @@ import { CategoryService } from 'src/app/shared/category/category.service';
   templateUrl: './product-filter.component.html',
   styleUrls: ['./product-filter.component.css']
 })
+
+// this component contains all the filters (currently contains only category filter)
 export class ProductFilterComponent implements OnInit {
   categories$: Observable<Category[]>;
   @Input('category') category: string;

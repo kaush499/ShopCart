@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 export class ProductCreateComponent implements OnInit, OnDestroy {
   categories: Category[];
   product = {};
-  id;
+  id: any;
   suscription: Subscription
 
   constructor(private router: Router,
@@ -22,25 +22,34 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
               private categoryService: CategoryService,
               private productService: AdminProuctService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    // for retrieving all the categories
     this.suscription = this.categoryService.getAllCategory()
     .subscribe(categories => {
       this.categories = categories;
     })
 
+    // if this in edit mode it takes id from url and then fetches the product from server
     this.id = this.route.snapshot.paramMap.get('id');
     if(this.id) {
-      this.product = this.productService.getProductById(this.id);
+      this.productService.getProductById(this.id)
+      .subscribe(product => {
+        this.product = product;
+      })
     }
 
   }
 
+  // saves the new product or updates the edited product
   onSave(productForm: NgForm) {
     let newProduct = productForm.value;
+
+    // selects the category from category id 
     const selectedCategory = this.categories.find(c => {
        return c.categoryId == newProduct.category; 
     })
     newProduct.categoryName = selectedCategory.categoryName;
+
     if(this.id){
       this.productService.editProduct(newProduct, this.id);
     }else {
@@ -49,12 +58,14 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
     
   }
 
+  // deletes the edited product
   onDelete() {
     if (!confirm('Are you sure you want to delete this product?')) return;
 
     this.productService.deleteProduct(this.id);
   }
 
+  // takes back to list of admin products list
   onCancel() {
     this.router.navigate(['../'],{relativeTo: this.route});
   }
