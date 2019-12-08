@@ -28,6 +28,8 @@ import { NavbarNavShowComponent } from './header/navbar-nav-show/navbar-nav-show
 import { NavbarNavHideComponent } from './header/navbar-nav-hide/navbar-nav-hide.component';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { CheckOutComponent } from './check-out/check-out.component';
+import { ShippingComponent } from './check-out/shipping/shipping.component';
+import { OrderSummaryComponent } from './order-summary/order-summary.component';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { CheckOutComponent } from './check-out/check-out.component';
     NavbarNavShowComponent,
     NavbarNavHideComponent,
     CartItemComponent,
-    CheckOutComponent
+    CheckOutComponent,
+    ShippingComponent,
+    OrderSummaryComponent
   ],
   imports: [
     BrowserModule,

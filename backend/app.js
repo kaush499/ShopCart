@@ -10,6 +10,7 @@ var adminProductRoutes = require('./routes/admin/admin-products');
 var guestRoutes = require('./routes/user/guest');
 var guestCartRoutes = require('./routes/cart/guest-cart');
 var userCartRoutes = require('./routes/cart/user-cart');
+var userAddressRoutes = require('./routes/user-details/user-address');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,6 +35,7 @@ app.use('/users', userRoutes);
 app.use('/guest', guestRoutes);
 app.use('/guest-cart', guestCartRoutes);
 app.use('/user-cart', userCartRoutes);
+app.use('/user-address', userAddressRoutes);
 
 module.exports = app;
 

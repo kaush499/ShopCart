@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CartService } from './cart.service';
 import { Cart } from '../shared/cart/cart.model';
 import { Router} from '@angular/router';
+import { CheckOutService } from '../check-out/check-out.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +13,8 @@ export class CartComponent implements OnInit, OnDestroy {
   cart: Cart;
 
   constructor(private cartService: CartService,
-              private router: Router) { }
+              private router: Router,
+              private checkOutService: CheckOutService) { }
 
   // sets the cart
   async ngOnInit() {
@@ -21,6 +23,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   proceedToCheckOut() {
+    this.checkOutService.setCheckOutCart([...this.cart.items]);
     this.router.navigate(['check-out']);
   }
 

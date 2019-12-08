@@ -2,3 +2,16 @@
     border: none;
     padding: none;
 }
+
+.card-img {
+    border: 0.05rem solid grey;
+}
+
+.item-quantity {
+    margin-top: 8px;
+    margin-left: 25px;
+}
+
+.item-quantity .btn-sm {
+    border-radius: 100%;
+}

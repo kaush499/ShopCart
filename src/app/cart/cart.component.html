@@ -1,27 +1,16 @@
-<div class="container">
-    <h1>Cart</h1>
-    <hr>
-    <div class="row" *ngIf="cart">
-        <div class="col-md-7 list-group">
+<h1>Cart</h1>
+<hr>
+<div class="row" *ngIf="cart">
+    <div class="col-md-8">
+        <div class="list-group">
             <div
                 *ngFor="let item of cart.items" 
                 class="list-group-item">
                     <app-cart-item [cartItem]="item"></app-cart-item>
             </div>
-        </div>
-        <div class="col-md-5">
-            <div class="card">
-                <h5 class="card-header">Order Summery</h5>
-                <div class="card-body">
-                  <p class="card-text">Total MRP:   <span class="text-right">{{ cart.totalPrice | currency:'USD' }}</span></p>
-                  <p class="card-text">Shipping:   <span class="text-right">Free</span></p>
-                  <div class="cart-footer">
-                    <p class="card-text"><strong>Total Amount:   <span class="text-right">{{ cart.totalPrice | currency:'USD' }}</span></strong></p>
-                    <button (click)="proceedToCheckOut()" class="btn btn-primary btn-block">Proceed</button>
-                  </div>
-                </div>
-                
-            </div>
-        </div>
+        </div>  
+    </div>
+    <div class="col-md-4">
+        <app-order-summary [cart]="cart"></app-order-summary>
     </div>
 </div>

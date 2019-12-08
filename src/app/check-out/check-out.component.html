@@ -1,1 +1,8 @@
-<p>check-out works!</p>
+<div class="row">
+    <div class="col-md-8">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="col-md-4">
+        <app-order-summary [cart]="cart"></app-order-summary>
+    </div>
+</div>

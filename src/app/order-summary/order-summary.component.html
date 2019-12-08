@@ -1,0 +1,11 @@
+<div class="card">
+    <h5 class="card-header">Order Summery</h5>
+    <div class="card-body">
+        <p class="card-text">Total MRP:   <span class="text-right">{{ cart.totalPrice | currency:'USD' }}</span></p>
+        <p class="card-text">Shipping:   <span class="text-right">Free</span></p>
+        <div class="cart-footer">
+        <p class="card-text"><strong>Total Amount:   <span class="text-right">{{ cart.totalPrice | currency:'USD' }}</span></strong></p>
+        <button (click)="proceedToCheckOut()" class="btn btn-primary btn-block">Proceed</button>
+        </div>
+    </div>
+</div>
