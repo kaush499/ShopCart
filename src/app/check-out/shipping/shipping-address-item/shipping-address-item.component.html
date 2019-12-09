@@ -1,0 +1,15 @@
+<div *ngIf="!addressForm">
+    <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ address.name}} {{ address.mob_number }}</h5>
+        <small><button class="btn btn-light btn-sm" (click)="onEdit()">Edit</button></small>
+    </div>
+    <p class="mb-1">{{ address.addr }}</p>
+    <small>{{ address.pincode }}</small>
+</div>
+
+<app-address-form
+    *ngIf="addressForm"
+    [address]="address" 
+    editMode="true" ></app-address-form>
+
+

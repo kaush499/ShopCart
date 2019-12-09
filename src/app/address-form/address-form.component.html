@@ -1,0 +1,61 @@
+<form #f="ngForm" (ngSubmit)="onSave(f)">
+    <div class="form-group">
+        <div class="col-md-6">
+            <label for="name">Name</label>
+            <input id="name" #name="ngModel" name="name" [(ngModel)]="address.name" type="text" class="form-control" required>
+            <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
+                <div *ngIf="name.errors.required">Name is required.</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="">Mobile Number</label>
+            <input #number="ngModel" name="number" [(ngModel)]="address.mob_number" type="number" class="form-control" required>
+            <div class="alert alert-danger" *ngIf="number.touched && number.invalid">
+                <div *ngIf="number.errors.required">Mobile Number is required.</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="">Address</label>
+      <input #address="ngModel" name="address" [(ngModel)]="address.address" type="text" class="form-control" placeholder="Write your whole address" required>
+      <div class="alert alert-danger" *ngIf="address.touched && address.invalid">
+        <div *ngIf="address.errors.required">Address is required.</div>
+      </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-6">
+                <label for="">State</label>
+                <input #state="ngModel" name="state" [(ngModel)]="address.state" type="text" class="form-control" required>
+                <div class="alert alert-danger" *ngIf="state.touched && state.invalid">
+                  <div *ngIf="state.errors.required">State is required.</div>
+                </div>
+        </div>
+      <div class="col-md-6">
+            <label for="">City</label>
+            <input #city="ngModel" name="city" [(ngModel)]="address.city" type="text" class="form-control" required>
+            <div class="alert alert-danger" *ngIf="city.touched && city.invalid">
+              <div *ngIf="city.errors.required">City is required.</div>
+            </div>
+      </div>
+    </div>
+    <div class="form-group">
+            <label for="">Pincode</label>
+            <input #pincode="ngModel" name="pincode" [(ngModel)]="address.pincode" type="number" class="form-control" required>
+            <div class="alert alert-danger" *ngIf="pincode.touched && pincode.invalid">
+              <div *ngIf="pincode.errors.required">pincode is required.</div>
+            </div>
+    </div>
+    <div class="col-md-3">
+            <button 
+            [disabled]="!f.valid"
+            type="submit"
+            class="btn btn-primary">Save</button>
+    </div>
+    <div class="col-md-3">  
+            <button 
+            (click)="onCancel"
+            class="btn btn-light">Cancel</button>
+    </div>
+    
+  </form>    
+  

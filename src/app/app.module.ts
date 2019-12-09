@@ -30,6 +30,8 @@ import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { ShippingComponent } from './check-out/shipping/shipping.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
+import { AddressFormComponent } from './address-form/address-form.component';
+import { ShippingAddressItemComponent } from './check-out/shipping/shipping-address-item/shipping-address-item.component';
 
 
 @NgModule({
@@ -56,7 +58,9 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
     CartItemComponent,
     CheckOutComponent,
     ShippingComponent,
-    OrderSummaryComponent
+    OrderSummaryComponent,
+    AddressFormComponent,
+    ShippingAddressItemComponent
   ],
   imports: [
     BrowserModule,

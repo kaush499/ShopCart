@@ -16,6 +16,7 @@ import { ProductListComponent } from './product/product-list/product-list.compon
 import { ShowNavbarComponent } from './page-navbar/show-navbar/show-navbar.component';
 import { HideNavbarComponent } from './page-navbar/hide-navbar/hide-navbar.component';
 import { CheckOutComponent } from './check-out/check-out.component';
+import { ShippingComponent } from './check-out/shipping/shipping.component';
 
 
 const routes: Routes = [
@@ -36,7 +37,10 @@ const routes: Routes = [
     { path: "signup", component: SignupComponent },
     { path: "login", component: LoginComponent },
     { path: "cart", component: CartComponent},
-    { path: "check-out", component: CheckOutComponent, canActivate: [AuthGuard] }
+    { path: "check-out", component: CheckOutComponent, canActivate: [AuthGuard], children: [
+      { path: "", redirectTo: "shipping", pathMatch: "full" },
+      { path: "shipping", component: ShippingComponent }
+    ] }
   ]} 
 ];
 

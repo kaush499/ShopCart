@@ -12,19 +12,12 @@ import { CheckOutService } from '../check-out/check-out.service';
 export class CartComponent implements OnInit, OnDestroy {
   cart: Cart;
 
-  constructor(private cartService: CartService,
-              private router: Router,
-              private checkOutService: CheckOutService) { }
+  constructor(private cartService: CartService) { }
 
   // sets the cart
   async ngOnInit() {
     this.cart = await this.cartService.getCart();
   
-  }
-
-  proceedToCheckOut() {
-    this.checkOutService.setCheckOutCart([...this.cart.items]);
-    this.router.navigate(['check-out']);
   }
 
   ngOnDestroy() {

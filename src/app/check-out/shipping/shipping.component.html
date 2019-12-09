@@ -1,3 +1,28 @@
 <h1>Shipping</h1>
+<hr>
+<div>
+        <p *ngIf="!addressForm">
+            <button (click)="onAddNewAddress()" class="btn btn-light">Add New Address</button>
+        </p>
+
+        <app-address-form
+        *ngIf="addressForm"
+        [address]="emptyAddress" 
+        editMode="false"></app-address-form>
+
+        <form #f="ngForm" (ngSubmit)="onSelectAddress(f)">
+            <div *ngFor="let addr of address" class="form-group">
+                    <input [id]="addr.addressId" type="radio" class="form-control" [value]="addr.addressId" name="shipping-address" ngModel required>
+                    <label [for]="addr.addressId"><app-shipping-address-item [address]="addr"></app-shipping-address-item></label>
+            </div>
+
+            <button 
+            [disabled]="!f.valid"
+            type="submit"
+            class="btn btn-primary">Continue</button>
+        </form>
+</div>
+
+
 
 
