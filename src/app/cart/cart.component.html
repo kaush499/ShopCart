@@ -8,7 +8,15 @@
                 class="list-group-item">
                     <app-cart-item [cartItem]="item"></app-cart-item>
             </div>
-        </div>  
+        </div>
+        <div class="w-100 d-flex justify-content-between">
+                <div class="mb-1"></div>
+                <button 
+                    id="proceed_button"
+                    (click)="proceedToCheckOut()" 
+                    class="btn btn-primary">Proceed</button> 
+        </div>
+         
     </div>
     <div class="col-md-4">
         <app-order-summary [cart]="cart"></app-order-summary>

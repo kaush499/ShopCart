@@ -10,26 +10,39 @@ import { UserService } from '../user/user.service';
   styleUrls: ['./address-form.component.css']
 })
 export class AddressFormComponent implements OnInit {
-  @Input('address') address: any;
+  @Input('addr') address: Address;
   @Input('editMode') editMode: boolean;
   private userId: number;
+  selAddr: Address
 
   constructor(private shippingService: ShippingService,
               private userService: UserService) { }
 
   ngOnInit() {
     this.userId = this.userService.getUserId();
-    console.log(this.address);
+    this.selAddr = new Address(this.address);
     console.log(this.editMode);
   }
 
   onSave(addressForm: NgForm) {
-  console.log(addressForm.value);
-    if(this.editMode) {
-      this.shippingService.updateAddress(this.address.addressId, addressForm.value, this.userId)
+    const val = addressForm.value;
+    const newAddess = {
+      name: val.name,
+      mob_number: val.number,
+      address: val.address,
+      state: val.state,
+      city: val.city,
+      pincode: val.pincode
+    };
+    if(this.editMode === true) {
+      this.shippingService.updateAddress(this.address.addressId, newAddess, this.userId)
     }else {
-      this.shippingService.addNewAddress(this.userId, addressForm.value);
+      this.shippingService.addNewAddress(this.userId, newAddess);
     }
+  }
+
+  onCancel() {
+    this.shippingService.onStopAddrForm();
   }
 
 }

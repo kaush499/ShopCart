@@ -15,8 +15,8 @@ router.get("/:id", checkAuth, (req, res, next) => {
 
 router.post("/:id", checkAuth, (req, res, next) => {
     let userId = req.params.id;
-
-    let address = {
+    console.log("req");
+    const address = {
         ...req.body.address,
         userId: userId
     };
@@ -28,6 +28,7 @@ router.post("/:id", checkAuth, (req, res, next) => {
 });
 
 router.put("/:id/:addrId", checkAuth, (req, res, next) => {
+    console.log("inside");
     let userId = req.params.id;
     let addressId = req.params.addrId;
 

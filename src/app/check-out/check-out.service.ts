@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 @Injectable({providedIn: "root"})
 export class CheckOutService {
     private cart: Cart;
+    private shippingAddressId: number;
+    private userId: number;
 
     constructor(private router: Router) {}
 
@@ -18,5 +20,10 @@ export class CheckOutService {
             this.router.navigate(["/"]);
         }
         return this.cart;
+    }
+
+    setShippingAddress(addressId: number, userId: number) {
+        this.shippingAddressId = addressId;
+        this.userId = userId
     }
 }

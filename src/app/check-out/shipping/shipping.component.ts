@@ -4,6 +4,7 @@ import { ShippingService } from './shipping.service';
 import { UserService } from 'src/app/user/user.service';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
+import { CheckOutService } from '../check-out.service';
 
 @Component({
   selector: 'app-shipping',
@@ -17,9 +18,11 @@ export class ShippingComponent implements OnInit, OnDestroy {
   selectedAddress: number;
   emptyAddress = {}
   private addressSubs: Subscription
+  private editSubs: Subscription;
 
   constructor(private shippingService: ShippingService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private checkOutService: CheckOutService) { }
 
   async ngOnInit() {
     this.userId = this.userService.getUserId();
@@ -27,19 +30,27 @@ export class ShippingComponent implements OnInit, OnDestroy {
     this.addressSubs = this.shippingService.getAddressStatus()
       .subscribe(val => {
         this.address = val;
-      })
+      });
+
+   this.editSubs = this.shippingService.getEditMode()
+    .subscribe(val => {
+      if(val.editMode && val.addressId === -1) this.addressForm = true;
+      else this.addressForm = false;
+    });
   }
 
   onAddNewAddress() {
-    this.addressForm = true;
+    this.shippingService.onStartAddrForm(-1);
   }
 
   onSelectAddress(selectedAddressForm: NgForm ) {
-    console.log(selectedAddressForm.value);
+    const selAddressId = selectedAddressForm.value.shippingAddress;
+    this.checkOutService.setShippingAddress(selAddressId, this.userId);
   }
 
   ngOnDestroy() {
     this.addressSubs.unsubscribe();
+    this.editSubs.unsubscribe();
   }
 
 }

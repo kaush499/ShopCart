@@ -21,7 +21,10 @@ UserAddress.addAddress = (address, response) => {
     let query = `INSERT INTO user_address SET ?`;
 
     connection.query(query, address, (err, result) => {
-        if(err) response(err, null);
+        if(err) {
+            response(err, null);
+            console.log(err);
+        }
         else {
             let addressId = result.insertId;
             response(null, addressId);
@@ -34,7 +37,10 @@ UserAddress.updateAddress = (body, response) => {
     let query = `UPDATE user_address SET ? WHERE addressId = ? AND userId = ?`;
 
     connection.query(query, [body.address, body.addressId, body.userId], (err, result) => {
-        if(err) response(err, null);
+        if(err){
+            response(err, null);
+            console.log(err);
+        } 
         else response(null, true);
     });
 };

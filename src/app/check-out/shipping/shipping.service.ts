@@ -9,7 +9,7 @@ import { ThrowStmt } from '@angular/compiler';
 export class ShippingService {
     private address: Address[];
     private addressChanged = new Subject<Address[]>();
-    private stopEditMode = new Subject<boolean>();
+    private editModeAddr = new Subject<{ editMode: boolean, addressId: number}>();
 
     constructor(private http: HttpClient) {}
 
@@ -17,8 +17,8 @@ export class ShippingService {
         return this.addressChanged.asObservable();
     }
 
-    getStopEditMode() {
-        return this.stopEditMode.asObservable();
+    getEditMode() {
+        return this.editModeAddr.asObservable();
     }
 
     getAllAddress(userId: number){
@@ -37,12 +37,13 @@ export class ShippingService {
             const index = this.address.findIndex(addr => addr.addressId === addressId);
             this.address[index] = updatedAddress;
             this.addressChanged.next([...this.address]);
-            this.stopEditMode.next(true);
+            this.editModeAddr.next({editMode: false, addressId: -2});
         })
         
     }
 
     addNewAddress(userId: number, newAddress: any) {
+        console.log("new");
         this.http
         .post<{ addressId: number }>(`http://localhost:3000/user-address/${userId}`, { address: newAddress })
         .subscribe(response => {
@@ -52,6 +53,15 @@ export class ShippingService {
                 userId: userId
             });
             this.addressChanged.next([...this.address]);
+            this.editModeAddr.next({editMode: false, addressId: -2});
         })
+    };
+
+    onStopAddrForm() {
+        this.editModeAddr.next({editMode: false, addressId: -2});
+    }
+
+    onStartAddrForm(addressId: number) {
+        this.editModeAddr.next({editMode: true, addressId: addressId})
     }
 }

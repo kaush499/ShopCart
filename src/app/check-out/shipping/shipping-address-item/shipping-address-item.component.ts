@@ -16,14 +16,15 @@ export class ShippingAddressItemComponent implements OnInit, OnDestroy {
   constructor(private shippingService: ShippingService) { }
 
   ngOnInit() {
-    this.editSubs = this.shippingService.getStopEditMode()
+    this.editSubs = this.shippingService.getEditMode()
       .subscribe(val => {
-        this.addressForm = false;
+        if(val.editMode && val.addressId === this.address.addressId) this.addressForm = true;
+        else this.addressForm = false;
       })
   }
 
   onEdit() {
-    this.addressForm = true;
+    this.shippingService.onStartAddrForm(this.address.addressId);
   }
 
   ngOnDestroy() {
