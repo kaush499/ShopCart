@@ -1,0 +1,36 @@
+<h6>Select your delivery address</h6>
+<br>
+<div class="list-group">
+        <div>
+            <p *ngIf="!addressForm">
+                <button (click)="onAddNewAddress()" class="btn btn-light">Add New Address</button>
+            </p>
+    
+            <app-address-form
+                class="list-group-item"
+                *ngIf="addressForm"
+                [addr]="emptyAddress" 
+                editMode="false"></app-address-form>
+        </div>
+        <form #f="ngForm" (ngSubmit)="onSelectAddress(f)">
+            
+            <div *ngFor="let addr of address" class="list-group-item">
+                    <input type="radio" [value]="addr.addressId" name="shippingAddress" ngModel required>
+                    <app-shipping-address-item [address]="addr"></app-shipping-address-item>
+            </div>
+
+            <div class="w-100 d-flex justify-content-between">
+                <div class="mb-1"></div>
+                <button
+                    id="continue_button" 
+                    [disabled]="!f.valid"
+                    type="submit"
+                    class="btn btn-primary">Continue</button>
+            </div>
+            
+        </form>
+</div>
+
+
+
+

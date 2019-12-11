@@ -1,41 +1,34 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { CartComponent } from './cart/cart.component';
-import { HomeComponent } from './home/home.component';
-import { SignupComponent } from './auth/signup/signup.component';
-import { LoginComponent } from './auth/login/login.component';
-import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
-import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
-import { MyOrdersComponent } from './user/my-orders/my-orders.component';
-import { AuthGuard } from './auth/auth.guard';
-import { AdminAuthGuard } from './admin/admin-auth.guard';
-import { ProductCreateComponent } from './admin/admin-products/product-create/product-create.component';
-import { AdminProductListComponent } from './admin/admin-products/admin-product-list/admin-product-list.component';
-import { ShowNavbarComponent } from './page-navbar/show-navbar/show-navbar.component';
-import { HideNavbarComponent } from './page-navbar/hide-navbar/hide-navbar.component';
-import { CheckOutComponent } from './check-out/check-out.component';
-import { ShippingComponent } from './check-out/shipping/shipping.component';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { AuthGuard } from './auth/services/auth.guard';
+import { HomeComponent } from './core/components/home/home.component';
+import { CartRoutesConfig, ProductRoutesConfig } from './shopping/shopping-routes-config';
+import { authRoutesConfig } from './auth/auth-routes-config';
+import { HideNavbarComponent } from './core/components/page-navbar/hide-navbar/hide-navbar.component';
+import { ShowNavbarComponent } from './core/components/page-navbar/show-navbar/show-navbar.component';
+import { MyOrdersComponent } from './user/components/my-orders/my-orders.component';
+import { AdminAuthGuard } from './admin/services/admin-auth.guard';
+import { AdminComponent } from './admin/components/admin/admin.component';
 
-
-const routes: Routes = [
+const appRoutes: Routes = [
   { path: "", component: ShowNavbarComponent, children: [
     { path: "", component: HomeComponent, pathMatch: "full" },
+    { path: "home", component: HomeComponent },
     { path: "my/orders", component: MyOrdersComponent, canActivate: [AuthGuard] },
+    ...ProductRoutesConfig,
+    { path: "admin", component: AdminComponent, loadChildren: './admin/admin.module#AdminModule' },
     
   ]},
   { path: "", component: HideNavbarComponent, children: [
-    { path: "signup", component: SignupComponent },
-    { path: "login", component: LoginComponent },
-    { path: "cart", component: CartComponent},
-    { path: "check-out", component: CheckOutComponent, canActivate: [AuthGuard], children: [
-      { path: "", redirectTo: "shipping", pathMatch: "full" },
-      { path: "shipping", component: ShippingComponent }
-    ] }
-  ]} 
+    ...CartRoutesConfig,
+    { path: "check-out", pathMatch: "full", loadChildren: () =>  import('./check-out/check-out.module').then(m => m.CheckOutModule) },
+    ...authRoutesConfig
+  ]},
+  { path: "**", component: HomeComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
   providers: [
     AuthGuard,
