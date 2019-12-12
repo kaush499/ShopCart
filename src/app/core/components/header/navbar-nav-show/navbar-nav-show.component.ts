@@ -24,19 +24,18 @@ export class NavbarNavShowComponent implements OnInit, OnDestroy {
   // initiates user and authentication and sets the value of the cart
   // sets up the auth observable listener
   async ngOnInit() {
-    console.log("show");
-      this.userIsAuthenticated = this.authService.getIsAuth();
-      this.userName = this.userService.getUserName();
-      this.isAdmin = this.userService.getIsAdmin();
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.userName = this.userService.getUserName();
+    this.isAdmin = this.userService.getIsAdmin();
 
-      this.authListenerSubs = this.authService
-      .getAuthStatusListener()
-      .subscribe(async isAuthenticated => {
-          this.userIsAuthenticated = isAuthenticated;
-          this.cart = await this.cartService.getCart();
-      });
+    this.authListenerSubs = this.authService
+    .getAuthStatusListener()
+    .subscribe(async isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.cart = await this.cartService.getCart();
+    });
 
-      this.cart = await this.cartService.getCart()
+    this.cart = await this.cartService.getCart()
   }
 
   onLogout() {

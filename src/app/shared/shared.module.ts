@@ -26,7 +26,8 @@ import { NavbarNavShowComponent } from '../core/components/header/navbar-nav-sho
         FormsModule,
         ReactiveFormsModule,
         NgbModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterModule.forChild([]).ngModule
     ]
 })
 export class SharedModule {}

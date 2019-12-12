@@ -17,11 +17,7 @@ export class AuthGuard implements CanActivate{
         state: RouterStateSnapshot
     ) {
         const isAuth = this.authService.getIsAuth();
-        console.log(isAuth);
-        console.log(state.url);
-        console.log(route);
         if(isAuth === false){
-            console.log("jb");
             this.router.navigate(['/login'],{queryParams: {"redirectUrl": state.url}});
         }
         return isAuth;

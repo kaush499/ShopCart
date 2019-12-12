@@ -8,7 +8,6 @@ import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartItemComponent } from './components/cart/cart-item/cart-item.component';
 import { SharedModule } from '../shared/shared.module';
-import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
@@ -21,8 +20,7 @@ import { RouterModule } from '@angular/router';
         CartItemComponent
     ],
     imports: [
-        SharedModule,
-        RouterModule.forChild([])
+        SharedModule
     ]
 })
 export class ShoppingModule {}

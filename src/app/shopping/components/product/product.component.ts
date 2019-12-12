@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-product',
     templateUrl: './product.component.html'
 })
-export class ProductComponent {}
+export class ProductComponent {
+    
+    constructor() {}
+}
