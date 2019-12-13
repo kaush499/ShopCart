@@ -7,7 +7,7 @@
         <div class="card-body">
             <p class="card-text"><small class="text-muted">{{ product.categoryName | titlecase }}</small></p>
             <h5 class="card-title">{{ product.title | titlecase }}</h5>
-            <h2 class="card-title">{{ product.price | currency:'USD' }}</h2>
+            <h2 class="card-title">{{ product.price | currency: 'INR':'symbol':'1.0-0' }}</h2>
             <div class="add-space"></div>
             <div *ngIf="cart" class="card-text">
                 <button 

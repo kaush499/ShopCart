@@ -1,6 +1,9 @@
 <div class="row">
     <div class="col-md-12">
-      <form #f="ngForm" (ngSubmit)="onSave(f)">
+      <div *ngIf="isLoading">
+          <app-loading-spinner></app-loading-spinner>
+      </div>
+      <form *ngIf="!isLoading" #f="ngForm" (ngSubmit)="onSave(f)">
           <div class="form-group">
             <label for="title">Title</label>
             <input #title="ngModel" [(ngModel)]="product.title" name="title" id="title" type="text" class="form-control" required>
@@ -51,8 +54,5 @@
           <button *ngIf="id" type="button" (click)="onDelete()" class="btn btn-danger">Delete</button>
         </form>    
     </div>
-    <!-- <div class="col-md-6">
-      <product-card [product]="product" [show-actions]="false"></product-card>
-    </div> -->
   </div>
   

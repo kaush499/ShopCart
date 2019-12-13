@@ -13,6 +13,7 @@ export class AuthService {
     private token: string;
     private tokenTimer: any;
     private authStatusListener = new Subject<boolean>();
+    private authError = new Subject<boolean>();
 
     constructor(private http: HttpClient,
                 private userService: UserService,
@@ -22,6 +23,10 @@ export class AuthService {
     // returns token
     getToken () {
         return this.token;
+    }
+
+    getAuthError() {
+        return this.authError.asObservable();
     }
     
     getIsAuth() {
@@ -61,7 +66,7 @@ export class AuthService {
                 this.router.navigate(["/"]);
             }
         }, err => {
-            console.log(err);
+            this.authError.next(true);
         });
     }
 
@@ -98,7 +103,7 @@ export class AuthService {
                 
             }
         }, err => {
-            console.log(err);
+            this.authError.next(true);
         });
     }
 

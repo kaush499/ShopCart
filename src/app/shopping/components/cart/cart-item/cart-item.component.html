@@ -23,7 +23,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ item.title | titlecase }}</h5>
             
-            <h6 class="card-title">{{ item.quantity }} x {{ item.price | currency:'USD' }}</h6>
+            <h6 class="card-title">{{ item.quantity }} x {{ item.price | currency: 'INR':'symbol':'1.0-0' }}</h6>
             <button 
                 (click)="removeItem()"
                 class="btn btn-danger btn-sm">Remove</button>

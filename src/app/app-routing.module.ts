@@ -8,6 +8,8 @@ import { MyOrdersComponent } from './user/components/my-orders/my-orders.compone
 import { AdminAuthGuard } from './admin/services/admin-auth.guard';
 import { ShowNavbarComponent } from './core/components/page-navbar/show-navbar/show-navbar.component';
 import { HideNavbarComponent } from './core/components/page-navbar/hide-navbar/hide-navbar.component';
+import { PageNotFoundComponent } from './error/components/page-not-found/page-not-found.component';
+import { ErrorPageComponent } from './error/components/error-page/error-page.component';
 
 const appRoutes: Routes = [
    { path: '', component: ShowNavbarComponent, children: [
@@ -20,8 +22,10 @@ const appRoutes: Routes = [
    { path: '', component: HideNavbarComponent, children: [
     ...CartRoutesConfig, 
     { path: "check-out", loadChildren: () =>  import('./check-out/check-out.module').then(m => m.CheckOutModule) },
-    ...authRoutesConfig
-   ]}
+    ...authRoutesConfig,
+    { path: 'error', component: ErrorPageComponent }
+   ]},
+   { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

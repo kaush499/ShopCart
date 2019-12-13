@@ -2,6 +2,6 @@
     <img *ngIf="product.imagePath" class="card-img-top" [src]="product.imagePath" alt="{{ product.title }}">
     <div class="card-body">
       <h4 class="card-title">{{ product.title }}</h4>
-      <p class="card-text">{{ product.price | currency:'USD' }}</p>
+      <p class="card-text">{{ product.price | currency: 'INR':'symbol':'1.0-0' }}</p>
     </div>
 </div>

@@ -10,6 +10,7 @@ export class AdminProuctService {
     private prdInitialised: boolean = false;
     private products: Product[] = [];
     private productsUpdated = new Subject<Product[]>();
+    private adminPrdError = new Subject<boolean>();
 
     constructor(private http: HttpClient,
                 private router: Router) {}
@@ -17,6 +18,10 @@ export class AdminProuctService {
         // observable for the updated prds
     getProductsUpdated() {
         return this.productsUpdated.asObservable();
+    }
+
+    getAdminPrdError() {
+        return this.adminPrdError.asObservable();
     }
 
     // gets the specific prd from server by its id
@@ -72,7 +77,7 @@ export class AdminProuctService {
              });
              this.router.navigate(['/admin/products']);
         }, err => {
-            console.log(err);
+            this.adminPrdError.next(true);
         });
     }
 
@@ -100,6 +105,8 @@ export class AdminProuctService {
                 categoryId: updatedProduct.category
             }
             this.router.navigate(['/admin/products']);
+        }, err => {
+            this.adminPrdError.next(true);
         })
     }
 
@@ -115,7 +122,7 @@ export class AdminProuctService {
             this.products.splice(deletedPrdIndex, 1);
             this.router.navigate(['/admin/products']);
         }, err => {
-            console.log(err);
+            this.adminPrdError.next(true);
         }); 
     }
 }

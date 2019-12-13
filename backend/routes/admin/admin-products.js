@@ -18,7 +18,6 @@ router.get("", checkAuth, checkIsAdmin, (req, res, next) => {
 //For getting a specific product based on its id
 router.get("/:id", checkAuth, checkIsAdmin, (req, res, next) => {
     const prdId = req.params.id;
-    console.log("inside");
     Product.getProduct(prdId, (err, result) => {
         if(err) res.status(400).send(err);
         else res.status(200).json({product: result});

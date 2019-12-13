@@ -17,8 +17,9 @@ router.post('/signup', (req, res, next) => {
         };
         User.createUser(newUser, (err, userId) => {
             if(err){
-                res.status(500).json({
-                    error: err
+                console.log(err);
+                res.status(400).json({
+                    message: "Please use a different signup credentials"
                 });
             } else {
                 const token = jwt.sign(
@@ -43,7 +44,7 @@ router.post('/login', (req, res, next) => {
     User.findUser(req.body.email, (err, user) => {
         if(err) {
             res.status(401).json({
-                message: "Auth failed"
+                message: "Auth failed! Please try again."
             });
         }else {
             bcrypt.compare(req.body.password, user.password, (err, same) => {

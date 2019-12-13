@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 
@@ -11,17 +11,15 @@ import { ShoppingModule } from './shopping/shopping.module';
 import { CoreModule } from './core/core.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { ErrorPageComponent } from './error/components/error-page/error-page.component';
 import { ErrorModalComponent } from './error/components/error-modal/error-modal.component';
-import { PageNotFoundComponent } from './error/components/page-not-found/page-not-found.component';
+import { ErrorModule } from './error/error.module';
+import { ErrorInterceptor } from './error/services/error-interceptor';
+import { GlobalErrorHandlerService } from './error/services/global-error-handler.service';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ErrorPageComponent,
-    ErrorModalComponent,
-    PageNotFoundComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -31,11 +29,15 @@ import { PageNotFoundComponent } from './error/components/page-not-found/page-no
     UserModule,
     CoreModule,
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ErrorModule
   ],
   providers: [
-    { provide:HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide:HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide:HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: ErrorHandler, useClass: GlobalErrorHandlerService }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorModalComponent]
 })
 export class AppModule { }

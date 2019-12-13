@@ -5,6 +5,8 @@ import { NgForm } from '@angular/forms';
 import { Category } from 'src/app/shared/models/product/category.model';
 import { Subscription } from 'rxjs';
 import { AdminProuctService } from 'src/app/admin/services/admin-product.service';
+import { ThrowStmt } from '@angular/compiler';
+import { PageNotFoundComponent } from 'src/app/error/components/page-not-found/page-not-found.component';
 
 @Component({
   selector: 'app-product-create',
@@ -15,7 +17,9 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
   categories: Category[];
   product = {};
   id: any;
-  suscription: Subscription
+  categorySubs: Subscription;
+  isLoading: boolean = false;
+  errorSubs: Subscription;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -24,7 +28,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     // for retrieving all the categories
-    this.suscription = this.categoryService.getAllCategory()
+    this.categorySubs = this.categoryService.getAllCategory()
     .subscribe(categories => {
       this.categories = categories;
     })
@@ -32,11 +36,20 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
     // if this in edit mode it takes id from url and then fetches the product from server
     this.id = this.route.snapshot.paramMap.get('id');
     if(this.id) {
+      this.isLoading = true;
       this.productService.getProductById(this.id)
       .subscribe(product => {
         this.product = product;
+        this.isLoading = false;
+      },err => {
+        this.isLoading = false;
       })
     }
+
+    this.errorSubs = this.productService.getAdminPrdError()
+      .subscribe(val => {
+        this.isLoading = false;
+      })
 
   }
 
@@ -71,7 +84,7 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.suscription.unsubscribe();
+    this.categorySubs.unsubscribe();
   }
 
 }

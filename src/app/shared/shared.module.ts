@@ -7,10 +7,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NavbarNavHideComponent } from '../core/components/header/navbar-nav-hide/navbar-nav-hide.component';
 import { NavbarNavShowComponent } from '../core/components/header/navbar-nav-show/navbar-nav-show.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
     declarations: [
-        OrderSummaryComponent
+        OrderSummaryComponent,
+        LoadingSpinnerComponent
     ],
     imports: [
         CommonModule,
@@ -27,7 +29,8 @@ import { NavbarNavShowComponent } from '../core/components/header/navbar-nav-sho
         ReactiveFormsModule,
         NgbModule,
         HttpClientModule,
-        RouterModule.forChild([]).ngModule
+        RouterModule.forChild([]).ngModule,
+        LoadingSpinnerComponent
     ]
 })
 export class SharedModule {}

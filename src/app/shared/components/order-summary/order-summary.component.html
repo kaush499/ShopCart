@@ -1,10 +1,10 @@
 <div class="card" *ngIf="cart">
     <h5 class="card-header">Order Summery</h5>
     <div class="card-body">
-        <p class="card-text">Total MRP:   <span class="text-right">{{ cart.totalPrice | currency:'USD' }}</span></p>
+        <p class="card-text">Total MRP:   <span class="text-right">{{ cart.totalPrice | currency: 'INR':'symbol':'1.0-0' }}</span></p>
         <p class="card-text">Shipping:   <span class="text-right">Free</span></p>
         <div class="cart-footer">
-        <p class="card-text"><strong>Total Amount:   <span class="text-right">{{ cart.totalPrice | currency:'USD' }}</span></strong></p>
+        <p class="card-text"><strong>Total Amount:   <span class="text-right">{{ cart.totalPrice | currency: 'INR':'symbol':'1.0-0' }}</span></strong></p>
         </div>
     </div>
 </div>
