@@ -21,7 +21,6 @@ export class AddressFormComponent implements OnInit {
   ngOnInit() {
     this.userId = this.userService.getUserId();
     this.selAddr = new Address(this.address);
-    console.log(this.editMode);
   }
 
   onSave(addressForm: NgForm) {
@@ -34,7 +33,8 @@ export class AddressFormComponent implements OnInit {
       city: val.city,
       pincode: val.pincode
     };
-    if(this.editMode === true) {
+    if(this.editMode) {
+      console.log("edit");
       this.shippingService.updateAddress(this.address.addressId, newAddess, this.userId)
     }else {
       this.shippingService.addNewAddress(this.userId, newAddess);

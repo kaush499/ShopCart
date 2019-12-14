@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
@@ -32,14 +32,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.login(email, password, this.redirectUrl);
 
     this.authErrorSubs = this.authService.getAuthError()
-      .subscribe(val => {
-        this.isLoading = false;
-        form.resetForm();
-      })
+    .subscribe(val => {
+      this.isLoading = false;
+      form.resetForm();
+    })
   }
 
+  // private resetForm() {
+  //   this.loginForm.resetForm();
+  // }
+ 
   ngOnDestroy() {
-    this.authErrorSubs.unsubscribe();
+    if(this.authErrorSubs) this.authErrorSubs.unsubscribe();
   }
 
 }

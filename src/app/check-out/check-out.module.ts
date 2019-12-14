@@ -7,13 +7,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CheckOutRoutingModule } from './check-out-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { PaymetMethodComponent } from './components/paymet-method/paymet-method.component';
 
 @NgModule({
     declarations: [
         CheckOutComponent,
         ShippingComponent,
         AddressFormComponent,
-        ShippingAddressItemComponent
+        ShippingAddressItemComponent,
+        PaymetMethodComponent
     ],
     imports: [
         CheckOutRoutingModule,

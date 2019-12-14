@@ -5,6 +5,7 @@ import { UserService } from 'src/app/user/services/user.service';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { CheckOutService } from '../../services/check-out.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shipping',
@@ -22,7 +23,8 @@ export class ShippingComponent implements OnInit, OnDestroy {
 
   constructor(private shippingService: ShippingService,
               private userService: UserService,
-              private checkOutService: CheckOutService) { }
+              private checkOutService: CheckOutService,
+              private router: Router) { }
 
   async ngOnInit() {
     this.userId = this.userService.getUserId();
@@ -46,6 +48,7 @@ export class ShippingComponent implements OnInit, OnDestroy {
   onSelectAddress(selectedAddressForm: NgForm ) {
     const selAddressId = selectedAddressForm.value.shippingAddress;
     this.checkOutService.setShippingAddress(selAddressId, this.userId);
+    this.router.navigate(["/check-out/payment"])
   }
 
   ngOnDestroy() {

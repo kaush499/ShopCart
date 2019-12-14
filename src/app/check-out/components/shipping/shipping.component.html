@@ -14,10 +14,21 @@
         </div>
         <form #f="ngForm" (ngSubmit)="onSelectAddress(f)">
             
-            <div *ngFor="let addr of address" class="list-group-item">
-                    <input type="radio" [value]="addr.addressId" name="shippingAddress" ngModel required>
-                    <app-shipping-address-item [address]="addr"></app-shipping-address-item>
+            <div *ngFor="let addr of address" class="radio from-group list-group-item">
+                <input type="radio" [value]="addr.addressId" name="shippingAddress" ngModel required>
+                <app-shipping-address-item [address]="addr"></app-shipping-address-item>
             </div>
+
+            <!-- <div class="radio form-group list-group-item" *ngFor="let addr of address">
+                <label>
+                  <input
+                    type="radio"
+                    name="shippingAddress"
+                    ngModel 
+                    required
+                    [value]="addr.addressId"><app-shipping-address-item [address]="addr"></app-shipping-address-item>
+                </label>
+              </div> -->
 
             <div class="w-100 d-flex justify-content-between">
                 <div class="mb-1"></div>

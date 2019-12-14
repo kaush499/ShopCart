@@ -20,6 +20,11 @@ router.get("", (req, res, next) => {
 
 });
 
+// router.post("/some", (req, res) => {
+//     console.log("sgwg");
+//     res.redirect("http://localhost:4200");
+// })
+
 router.get("/:id", (req, res, next) => {
     let prdId = req.params.id;
     Product.getProduct(prdId, (err, result) => {

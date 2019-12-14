@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
@@ -16,6 +16,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    
   }
 
   // signup through authService
@@ -31,10 +32,15 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         form.resetForm();
       })
+    
   }
 
+  // private resetForm () {
+  //   this.signupForm.resetForm();
+  // }
+
   ngOnDestroy() {
-    this.authErrorSubs.unsubscribe();
+    if(this.authErrorSubs) this.authErrorSubs.unsubscribe();
   }
 
 }
