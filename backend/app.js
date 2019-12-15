@@ -11,6 +11,7 @@ var guestRoutes = require('./routes/user/guest');
 var guestCartRoutes = require('./routes/cart/guest-cart');
 var userCartRoutes = require('./routes/cart/user-cart');
 var userAddressRoutes = require('./routes/user-details/user-address');
+var paymentRoutes = require('./routes/payment/payment');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,7 +20,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, x-redirect"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -36,6 +37,7 @@ app.use('/guest', guestRoutes);
 app.use('/guest-cart', guestCartRoutes);
 app.use('/user-cart', userCartRoutes);
 app.use('/user-address', userAddressRoutes);
+app.use('/api/payment', paymentRoutes);
 
 module.exports = app;
 

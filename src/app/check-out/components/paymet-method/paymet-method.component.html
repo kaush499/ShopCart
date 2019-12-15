@@ -10,10 +10,10 @@
             ngModel 
             required
             #cod="ngModel"
-            value="1">
+            value="cod">
                 Cash On Delivery
                 <button
-                    [disabled]="!(cod.value == 1)"
+                    [disabled]="!(cod.value == 'cod')"
                     type="submit"
                     class="btn btn-primary btn-sm">Place Order</button>
         </label>
@@ -26,10 +26,10 @@
             ngModel 
             required
             #paypal="ngModel"
-            value="2">
+            value="paypal">
                 Pay with Paypal
                 <button
-                    [disabled]="!(paypal.value == 2)"
+                    [disabled]="!(paypal.value == 'paypal')"
                     type="submit"
                     class="btn btn-primary btn-sm">Pay And Place Order</button>
         </label>

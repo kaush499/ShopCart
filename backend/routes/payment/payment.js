@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var Product = require('../../models/products/product.model');
+var paypalRoutes = require('./payment-methods/paypal');
 
-router.post("", (req, res, next) => {
-    let 
-})
+router.use('/paypal', paypalRoutes);
+
+module.exports = router;
+

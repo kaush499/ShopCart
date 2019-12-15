@@ -29,9 +29,10 @@ export class CheckOutService {
         this.userId = userId
     }
 
-    setPayment(paymentMethodId: number){
+    setPayment(payment: string){
         const order = this.buildOrder();
-        this.http.post("")
+        this.http.post(`/api/payment/${payment}`, {order: order})
+            .toPromise();
     }
 
     private buildOrder() {
@@ -44,9 +45,10 @@ export class CheckOutService {
             };
         });
 
-        let order = {
+        const order = {
             items: items,
             customerId: this.userId,
+            totalAmount: this.cart.totalPrice,
             shipping: this.shippingAddressId
         };
 

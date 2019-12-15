@@ -24,8 +24,8 @@ const appRoutes: Routes = [
     { path: "check-out", loadChildren: () =>  import('./check-out/check-out.module').then(m => m.CheckOutModule) },
     ...authRoutesConfig,
     { path: 'error', component: ErrorPageComponent }
-   ]},
-   { path: '**', component: PageNotFoundComponent }
+   ]}
+   //{ path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

@@ -15,11 +15,16 @@ import { ErrorModalComponent } from './error/components/error-modal/error-modal.
 import { ErrorModule } from './error/error.module';
 import { ErrorInterceptor } from './error/services/error-interceptor';
 import { GlobalErrorHandlerService } from './error/services/global-error-handler.service';
+import { OrderSuccessComponent } from './order/components/order-success/order-success.component';
+import { OrderFailureComponent } from './order/components/order-failure/order-failure.component';
+import { RedirectInterceptor } from './check-out/services/redirect-interceptor';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    OrderSuccessComponent,
+    OrderFailureComponent
   ],
   imports: [
     BrowserModule,
@@ -34,8 +39,9 @@ import { GlobalErrorHandlerService } from './error/services/global-error-handler
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
     { provide:HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: GlobalErrorHandlerService }
+    { provide:HTTP_INTERCEPTORS, useClass: RedirectInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
   entryComponents: [ErrorModalComponent]

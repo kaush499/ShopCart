@@ -16,5 +16,4 @@ export class AuthInterceptor implements HttpInterceptor {
         //console.log(authRequest.headers);
         return next.handle(authRequest);
     }
-
 }
