@@ -10,6 +10,8 @@ import { ShowNavbarComponent } from './core/components/page-navbar/show-navbar/s
 import { HideNavbarComponent } from './core/components/page-navbar/hide-navbar/hide-navbar.component';
 import { PageNotFoundComponent } from './error/components/page-not-found/page-not-found.component';
 import { ErrorPageComponent } from './error/components/error-page/error-page.component';
+import { OrderSuccessComponent } from './order/components/order-success/order-success.component';
+import { OrderFailureComponent } from './order/components/order-failure/order-failure.component';
 
 const appRoutes: Routes = [
    { path: '', component: ShowNavbarComponent, children: [
@@ -23,9 +25,11 @@ const appRoutes: Routes = [
     ...CartRoutesConfig, 
     { path: "check-out", loadChildren: () =>  import('./check-out/check-out.module').then(m => m.CheckOutModule) },
     ...authRoutesConfig,
-    { path: 'error', component: ErrorPageComponent }
-   ]}
-   //{ path: '**', component: PageNotFoundComponent }
+    { path: 'error', component: ErrorPageComponent },
+    { path: 'order/success', component: OrderSuccessComponent },
+    { path: 'order/failure', component: OrderFailureComponent }
+   ]},
+   { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

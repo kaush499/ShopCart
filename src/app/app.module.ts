@@ -18,13 +18,12 @@ import { GlobalErrorHandlerService } from './error/services/global-error-handler
 import { OrderSuccessComponent } from './order/components/order-success/order-success.component';
 import { OrderFailureComponent } from './order/components/order-failure/order-failure.component';
 import { RedirectInterceptor } from './check-out/services/redirect-interceptor';
+import { OrderModule } from './order/order.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    OrderSuccessComponent,
-    OrderFailureComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +34,8 @@ import { RedirectInterceptor } from './check-out/services/redirect-interceptor';
     CoreModule,
     SharedModule,
     AppRoutingModule,
-    ErrorModule
+    ErrorModule,
+    OrderModule
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
