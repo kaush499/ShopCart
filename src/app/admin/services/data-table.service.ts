@@ -46,7 +46,7 @@ export class NgbdSortableHeader {
     }
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class TableService {
   // sorting function
     SortPrd(products: Product[], {column, direction}: SortEvent) {

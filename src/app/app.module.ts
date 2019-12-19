@@ -15,8 +15,6 @@ import { ErrorModalComponent } from './error/components/error-modal/error-modal.
 import { ErrorModule } from './error/error.module';
 import { ErrorInterceptor } from './error/services/error-interceptor';
 import { GlobalErrorHandlerService } from './error/services/global-error-handler.service';
-import { OrderSuccessComponent } from './order/components/order-success/order-success.component';
-import { OrderFailureComponent } from './order/components/order-failure/order-failure.component';
 import { RedirectInterceptor } from './check-out/services/redirect-interceptor';
 import { OrderModule } from './order/order.module';
 

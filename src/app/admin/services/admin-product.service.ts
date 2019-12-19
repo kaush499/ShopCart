@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Product } from 'src/app/shared/models/product/product.model';
 import { map } from 'rxjs/operators';
 
-@Injectable({ providedIn: "root" })
+@Injectable({providedIn: "root"})
 export class AdminProuctService {
     private prdInitialised: boolean = false;
     private products: Product[] = [];

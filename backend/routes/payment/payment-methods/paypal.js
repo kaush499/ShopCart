@@ -10,9 +10,10 @@ router.post("", (req, res, next) => {
     PaypalService.createPayment(order)
     .then(result => {
         res.setHeader('x-redirect', result);
-        res.status(201).send();
+        res.status(200).send();
     }).catch( err => {
         console.log(err);
+        res.status(500).send("err: jn");
     })
     // res.setHeader('x-redirect', 'anything');
     // console.log(res.getHeaderNames());

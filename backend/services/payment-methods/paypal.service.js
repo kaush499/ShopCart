@@ -13,15 +13,15 @@ paypalService.createPayment = function(order) {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": "https://675d1f78.ngrok.io/api/payment/paypal/success",
-            "cancel_url": "https://675d1f78.ngrok.io/api/payment/paypal/cancel"
+            "return_url": "https://d09905dc.ngrok.io/payment/paypal/success",
+            "cancel_url": "https://d09905dc.ngrok.io/payment/paypal/cancel"
         },
         "transactions": [{
             "item_list": {
                 "items": order.items.map(item => {
                     return {
                         name: item.productName,
-                        price: item.totalPrice,
+                        price: item.price,
                         currency: 'USD',
                         quantity: item.quantity
                     };
@@ -38,7 +38,7 @@ paypalService.createPayment = function(order) {
     return new Promise(function(resolve, reject) {
         paypal.payment.create(create_payment_json, function (error, payment) {
             if (error) {
-                console.log(error);
+                console.log(JSON.stringify(error, null, 2));
                 reject("error");
             } else {
                 console.log("Create Payment Response");
@@ -52,7 +52,6 @@ paypalService.createPayment = function(order) {
 }
 
 paypalService.executePayment = function(query) {
-    console.log(cusOrder);
     const payerId = query.PayerID;
     const paymentId = query.paymentId;
 
@@ -72,7 +71,7 @@ paypalService.executePayment = function(query) {
                 console.log(error);
                 reject("fff");
             }else {
-                console.log(JSON.stringify(payment));
+                // console.log(JSON.stringify(payment, null, 2));
                 resolve("success");
             }
         })

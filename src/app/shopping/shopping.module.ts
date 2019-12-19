@@ -8,6 +8,7 @@ import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartItemComponent } from './components/cart/cart-item/cart-item.component';
 import { SharedModule } from '../shared/shared.module';
+import { ProductService } from './services/product.service';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,9 @@ import { SharedModule } from '../shared/shared.module';
     ],
     imports: [
         SharedModule
+    ],
+    providers: [
+        ProductService
     ]
 })
 export class ShoppingModule {}

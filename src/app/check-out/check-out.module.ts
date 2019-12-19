@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { CheckOutRoutingModule } from './check-out-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { PaymetMethodComponent } from './components/paymet-method/paymet-method.component';
+import { CheckOutService } from './services/check-out.service';
+import { ShippingService } from './services/shipping.service';
 
 @NgModule({
     declarations: [

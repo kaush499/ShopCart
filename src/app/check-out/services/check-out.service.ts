@@ -31,7 +31,7 @@ export class CheckOutService {
 
     setPayment(payment: string){
         const order = this.buildOrder();
-        this.http.post(`/api/payment/${payment}`, {order: order})
+        this.http.post(`http://localhost:3000/payment/${payment}`, {order: order})
             .toPromise();
     }
 
@@ -41,7 +41,7 @@ export class CheckOutService {
                 productId: item.productId,
                 productName: item.title,
                 quantity: item.quantity,
-                totalPrice: item.totalPrice
+                price: item.price
             };
         });
 

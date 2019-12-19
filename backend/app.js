@@ -26,6 +26,10 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET, POST, PATCH, PUT, DELETE, OPTIONS"
   );
+  res.setHeader(
+    "Access-Control-Expose-Headers",
+    "x-redirect"
+  )
   next();
 });
 
@@ -37,7 +41,7 @@ app.use('/guest', guestRoutes);
 app.use('/guest-cart', guestCartRoutes);
 app.use('/user-cart', userCartRoutes);
 app.use('/user-address', userAddressRoutes);
-app.use('/api/payment', paymentRoutes);
+app.use('/payment', paymentRoutes);
 
 module.exports = app;
 
