@@ -26,7 +26,7 @@ const appRoutes: Routes = [
     { path: "check-out", loadChildren: () =>  import('./check-out/check-out.module').then(m => m.CheckOutModule) },
     ...authRoutesConfig,
     { path: 'error', component: ErrorPageComponent },
-    { path: 'order/success', component: OrderSuccessComponent },
+    { path: 'order/success/:id', component: OrderSuccessComponent },
     { path: 'order/failure', component: OrderFailureComponent }
    ]},
    { path: '**', component: PageNotFoundComponent }

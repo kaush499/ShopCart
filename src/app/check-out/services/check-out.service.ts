@@ -3,6 +3,7 @@ import { Cart } from '../../shared/models/cart/cart.model';
 import { CartItem } from '../../shared/models/cart/cart-item.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { PaymentMethodModel } from '../models/payment-methods.model';
 
 @Injectable({providedIn: "root"})
 export class CheckOutService {
@@ -29,17 +30,16 @@ export class CheckOutService {
         this.userId = userId
     }
 
-    setPayment(payment: string){
-        const order = this.buildOrder();
+    setPayment(payment: PaymentMethodModel){
+        const order = this.buildOrder(payment.methodId);
         this.http.post(`http://localhost:3000/payment/${payment}`, {order: order})
             .toPromise();
     }
 
-    private buildOrder() {
+    private buildOrder(methodId: number) {
         const items =  this.cart.items.map(item => {
             return {
                 productId: item.productId,
-                productName: item.title,
                 quantity: item.quantity,
                 price: item.price
             };
@@ -47,11 +47,18 @@ export class CheckOutService {
 
         const order = {
             items: items,
-            customerId: this.userId,
+            userId: this.userId,
             totalAmount: this.cart.totalPrice,
-            shipping: this.shippingAddressId
+            shipping: this.shippingAddressId,
+            paymentId: methodId
         };
 
         return order;
+    }
+
+    getPaymentMethods() {
+        return this.http
+                .get<{methods: PaymentMethodModel[]}>
+                ("http://localhost:3000/payment/methods");
     }
 }

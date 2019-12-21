@@ -1,38 +1,21 @@
 <h6>Select your Payment Method</h6>
 <br>
 
-<form #f="ngForm" (ngSubmit)="onPayment(f)">
-    <div class="radio form-group" >
-        <label>
-          <input
-            type="radio"
-            name="paymentMethod"
-            ngModel 
-            required
-            #cod="ngModel"
-            value="cod">
-                Cash On Delivery
-                <button
-                    [disabled]="!(cod.value == 'cod')"
-                    type="submit"
-                    class="btn btn-primary btn-sm">Place Order</button>
-        </label>
-    </div>
-    <div class="radio form-group" >
-        <label>
+<form #f="ngForm" *ngIf="methods" (ngSubmit)="onPayment(f)">
+    <div class="radio form-group" *ngFor="let m of methods">
+            <label>
             <input
-            type="radio"
-            name="paymentMethod"
-            ngModel 
-            required
-            #paypal="ngModel"
-            value="paypal">
-                Pay with Paypal
-                <button
-                    [disabled]="!(paypal.value == 'paypal')"
-                    type="submit"
-                    class="btn btn-primary btn-sm">Pay And Place Order</button>
-        </label>
+                type="radio"
+                name="paymentMethod"
+                ngModel 
+                required
+                [value]="m.methodId">
+                {{ m.name }}
+            </label>
     </div>
+    <button
+        [disabled]="!f.valid"
+        type="submit"
+        class="btn btn-primary btn-sm">Pay And Place Order</button>
     
 </form>

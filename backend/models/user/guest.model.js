@@ -10,7 +10,6 @@ Guest.createNewGuest = (response) => {
     connection.query(query, (err, result) => {
         if(err) response(err, null);
         else {
-            console.log(result);
             let guestId = result.insertId;
             response(null, guestId);
         }
