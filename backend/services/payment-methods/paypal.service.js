@@ -1,6 +1,7 @@
 const paypal_cred = require("../../connection/payments/paypal");
 var paypal = require("paypal-rest-sdk");
 var Payment = require('../../models/payment/payment.model');
+var OrderService = require('../orders/order.service');
 
 var paypalService = {};
 
@@ -14,8 +15,8 @@ paypalService.createPayment = function(order) {
             "payment_method": "paypal"
         },
         "redirect_urls": {
-            "return_url": "https://0a98b074.ngrok.io/payment/paypal/success",
-            "cancel_url": "https://0a98b074.ngrok.io/payment/paypal/cancel"
+            "return_url": "https://04f59e1f.ngrok.io/payment/paypal/success",
+            "cancel_url": "https://04f59e1f.ngrok.io/payment/paypal/cancel"
         },
         "transactions": [{
             "item_list": {
@@ -82,7 +83,14 @@ paypalService.executePayment = function(query) {
                             },
                             ...result
                         };
-                        resolve(paymentInfo)
+                        OrderService.createOrder({order: cusOrder, paymentInfo: paymentInfo})
+                        .then(val => {
+                            console.log(val);
+                            resolve(paymentInfo.transactionId);
+                        })
+                        .catch(error => {
+                            reject(error);  
+                        })
                     }
                 })
             }

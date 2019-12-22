@@ -1,5 +1,4 @@
 var Order = require('../../models/orders/order.model');
-var Payment = require('../../models/payment/payment.model');
 
 var OrderService = {};
 
@@ -18,9 +17,10 @@ OrderService.createOrder = (body) => {
     
             Order.addOrder(userOrder, (err, result) => {
                 if(err) reject(err);
+                else{
+                    if(i === body.order.items.length - 1) resolve(true);
+                }
             });
-
-            if(i === body.order.items.length - 1) resolve(true);
         });
     })
     

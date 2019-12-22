@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS payment_method;
 CREATE TABLE payment_method (
-    paymentMethodID INTEGER AUTO_INCREMENT PRIMARY KEY,
+    paymentMethodId INTEGER AUTO_INCREMENT PRIMARY KEY,
     paymentMethodName VARCHAR(255) NOT NULL,
     paymentMethodTable VARCHAR(255) NULL NULL,
     routeName VARCHAR(255) NULL NULL

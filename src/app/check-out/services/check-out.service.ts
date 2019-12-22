@@ -32,7 +32,7 @@ export class CheckOutService {
 
     setPayment(payment: PaymentMethodModel){
         const order = this.buildOrder(payment.methodId);
-        this.http.post(`http://localhost:3000/payment/${payment}`, {order: order})
+        this.http.post(`http://localhost:3000/payment/${payment.routeName}`, {order: order})
             .toPromise();
     }
 

@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CheckOutService } from '../../services/check-out.service';
 import { PaymentMethodModel } from '../../models/payment-methods.model';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-paymet-method',
-  templateUrl: './paymet-method.component.html',
-  styleUrls: ['./paymet-method.component.css']
+  selector: 'app-payment',
+  templateUrl: './payment.component.html',
+  styleUrls: ['./payment.component.css']
 })
-export class PaymetMethodComponent implements OnInit {
+export class PaymentComponent implements OnInit, OnDestroy {
   methods: PaymentMethodModel[] = null;
   private methodSubs: Subscription;
 
@@ -18,8 +18,6 @@ export class PaymetMethodComponent implements OnInit {
   async ngOnInit() {
     this.methodSubs = this.checkOutService.getPaymentMethods()
       .subscribe(response => {
-        console.log("kgj");
-        console.log(response);
         this.methods = response.methods;
       })
   }
@@ -28,6 +26,10 @@ export class PaymetMethodComponent implements OnInit {
     const paymentId = form.value.paymentMethod;
     const payment = this.methods.find(m => m.methodId == paymentId)
     this.checkOutService.setPayment(payment);
+  }
+
+  ngOnDestroy() {
+    this.methodSubs.unsubscribe();
   }
 
 }

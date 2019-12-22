@@ -4,8 +4,10 @@ CREATE TABLE orders (
     userId INTEGER NOT NULL,
     billDate TIMESTAMP DEFAULT NOW(),
     shipDate DATETIME,
-    delivery_status BOOLEAN DEFAULT false,
+    deliveryStatus BOOLEAN DEFAULT false,
+    shippingId INTEGER NOT NULL,
     transactionId INTEGER NOT NULL,
-    FOREIGN KEY(userId) REFERENCES user(userId),
-    FOREIGN KEY(transactionId) REFERENCES transactions(transactionId)
+    FOREIGN KEY(userId) REFERENCES user(userId) ON DELETE CASCADE,
+    FOREIGN KEY(transactionId) REFERENCES transactions(transactionId) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(shippingId) REFERENCES user_address(addressId) 
 );
