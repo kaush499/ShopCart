@@ -9,7 +9,13 @@ OrderService.createOrder = (body) => {
                 orderDetails: item,
                 order: {
                     transactionId: body.paymentInfo.transactionId,
-                    userId: body.order.userId
+                    userId: body.order.userId,
+                    name: body.order.shipping.name,
+                    mobNumber: body.order.shipping.mob_number,
+                    city: body.order.shipping.city,
+                    state: body.order.shipping.state,
+                    address: body.order.shipping.address,
+                    pincode: body.order.shipping.pincode
                 },
                 paymentInfo: body.paymentInfo.paymentTable,
                 tableName: body.paymentInfo.tableName

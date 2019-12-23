@@ -38,26 +38,30 @@ Order.addOrder = (body, response) => {
 }
 
 Order.getUserOrders = (userId, response) => {
-    let query = `SELECT o.*, od.*, p.title, p.imagePath, pm.paymentMethodName as paymentMode 
+    let query = `SELECT o.orderId, o.billDate, o.shipDate, o.deliveryStatus,
+                 od.*, p.title, p.imagePath
                  FROM orders as o
                  NATURAL JOIN order_details as od
-                 NATURAL JOIN transactions as t
-                 NATURAL JOIN payment_method as pm
                  NATURAL JOIN products as p
                  WHERE o.userId = ?`;
 
     connection.query(query, userId, (err, result) => {
-        if(err) response(err, null);
-        else response(null, result);
+        if(err){
+            console.log(err);
+            response(err, null);
+        } 
+        else{
+            console.log(result);
+            response(null, result);
+        } 
     });             
 };
 
 Order.getNewOrders = (transactionId, response) => {
-    let query = `SELECT o.*, od.*, p.title, p.imagePath, pm.paymentMethodName as paymentMode 
+    let query = `SELECT o.orderId, o.billDate, o.shipDate, o.deliveryStatus,
+                od.*, p.title, p.imagePath
                 FROM orders as o
                 NATURAL JOIN order_details as od
-                NATURAL JOIN transactions as t
-                NATURAL JOIN payment_method as pm
                 NATURAL JOIN products as p
                 WHERE o.transactionId = ?`
 

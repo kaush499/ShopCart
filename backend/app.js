@@ -43,7 +43,7 @@ app.use('/guest-cart', guestCartRoutes);
 app.use('/user-cart', userCartRoutes);
 app.use('/user-address', userAddressRoutes);
 app.use('/payment', paymentRoutes);
-app.use('/orsers', orderRoutes);
+app.use('/orders', orderRoutes);
 
 module.exports = app;
 

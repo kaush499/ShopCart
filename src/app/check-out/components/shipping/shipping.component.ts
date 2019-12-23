@@ -47,7 +47,8 @@ export class ShippingComponent implements OnInit, OnDestroy {
 
   onSelectAddress(selectedAddressForm: NgForm ) {
     const selAddressId = selectedAddressForm.value.shippingAddress;
-    this.checkOutService.setShippingAddress(selAddressId, this.userId);
+    const selAddress = this.address.find(x => x.addressId === selAddressId);
+    this.checkOutService.setShippingAddress(selAddress, this.userId);
     this.router.navigate(["/check-out/payment"])
   }
 

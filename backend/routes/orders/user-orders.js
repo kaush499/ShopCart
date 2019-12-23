@@ -16,7 +16,7 @@ router.get('/new/:id', (req, res, next) => {
 router.get('/all/:id', (req, res, next) => {
     const userId = req.params.id;
 
-    Order.getNewOrders(userId, (err, orders) => {
+    Order.getUserOrders(userId, (err, orders) => {
         if(err) {
             console.log(err);
             res.status(500).send();

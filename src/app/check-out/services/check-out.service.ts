@@ -4,11 +4,12 @@ import { CartItem } from '../../shared/models/cart/cart-item.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { PaymentMethodModel } from '../models/payment-methods.model';
+import { Address } from 'src/app/shared/models/address.model';
 
 @Injectable({providedIn: "root"})
 export class CheckOutService {
     private cart: Cart;
-    private shippingAddressId: number;
+    private shippingAddress: Address;
     private userId: number;
 
     constructor(private router: Router,
@@ -25,8 +26,8 @@ export class CheckOutService {
         return this.cart;
     }
 
-    setShippingAddress(addressId: number, userId: number) {
-        this.shippingAddressId = addressId;
+    setShippingAddress(address: Address, userId: number) {
+        this.shippingAddress = address;
         this.userId = userId
     }
 
@@ -49,7 +50,7 @@ export class CheckOutService {
             items: items,
             userId: this.userId,
             totalAmount: this.cart.totalPrice,
-            shipping: this.shippingAddressId,
+            shipping: this.shippingAddress,
             paymentId: methodId
         };
 

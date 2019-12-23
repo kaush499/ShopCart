@@ -1,1 +1,45 @@
-<p>my-orders works!</p>
+<h1>My Orders</h1>
+
+<div class="container">
+    <div class="list-group">
+        <div class="list-group-item" *ngFor="let order of orders$ | async">
+            <div class="card">
+                <div class="card-header w-100 d-flex justify-content-between">
+                    <a class="mb-1" class="btn btn-light btn-md" routerLink="">Details</a>
+                    <button class="btn btn-primary btn-md">Track Order</button>
+                </div>
+                <div class="card-body">
+                    <div class="row no-gutters">
+                        <div class="col-md-2">
+                            <img [src]="order.imagePath" class="card-img" alt="">
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="card-title">{{ order.title }}</h5>
+                        </div>
+                        <div class="col-md-1 text-right">
+                            <h6 class="card-title">{{ order.price | currency: 'INR':'symbol':'1.0-0' }}</h6>
+                            <p class="card-text"><small class="text-muted">Quantity: {{ order.quantity }}</small></p>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <div *ngIf="order.deliveryStatus; else notDelivered">
+                                <h6 class="card-title">Delivered on {{ order.shipDate }}</h6>
+                                <p class="card-text"><small class="text-muted">Return Policy till -</small></p> 
+                            </div>
+                            <ng-template #notDelivered>
+                                    <h6 class="card-title">Yet to be delivered</h6>
+                            </ng-template>
+                        </div>
+                        <!-- <div class="col-md-3">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+

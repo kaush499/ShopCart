@@ -1,0 +1,16 @@
+.card {
+    border: none;
+    padding: none;
+}
+
+.list-group-item {
+    padding: none;
+}
+
+.card-img {
+    border: 0.05rem solid grey;
+}
+
+img {
+    width: 120px;
+}
