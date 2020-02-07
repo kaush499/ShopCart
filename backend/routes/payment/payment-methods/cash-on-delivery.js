@@ -4,6 +4,7 @@ var CashOnDeliveryService = require('../../../services/payment-methods/cash-on-d
 
 router.post("", (req, res, next) =>{
     const order = req.body.order;
+    res.status(200);
     CashOnDeliveryService.executeOrder(order)
     .then(transactionId => {
         res.setHeader('x-redirect', `http://localhost:4200/order/success/${transactionId}`);

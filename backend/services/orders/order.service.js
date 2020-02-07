@@ -1,4 +1,5 @@
 var Order = require('../../models/orders/order.model');
+var Emails = require('../email');
 
 var OrderService = {};
 
@@ -24,7 +25,10 @@ OrderService.createOrder = (body) => {
             Order.addOrder(userOrder, (err, result) => {
                 if(err) reject(err);
                 else{
-                    if(i === body.order.items.length - 1) resolve(true);
+                    if(i === body.order.items.length - 1){
+                        Emails.sendOrderPlacedEmail(body.order);
+                        resolve(true);
+                    } 
                 }
             });
         });

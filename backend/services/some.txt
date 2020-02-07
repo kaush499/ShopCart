@@ -1,0 +1,16 @@
+ "from": "201701075@daiict.ac.in",
+        "to": "201701075@daiict.ac.in",
+        "templateId": "16118863",
+        "templateModel": {
+            "name": "kaush",
+            "product_name": "KS Store",
+            "date": "1st feb",
+            "reciept_details": order.items.map(item => {
+                return {
+                    "description": `Tshirt (${item.quantity})`,
+                    "price": `Rs ${item.price}`
+                };
+            }),
+            "total": `Rs ${order.totalAmount}`
+        },
+        "inlineCss": true
