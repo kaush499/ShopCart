@@ -8,8 +8,8 @@ var Emails = {};
 Emails.sendOrderPlacedEmail = (order) => {
     //console.log(order, null, 2);
     var op = {
-        from: "201701075@daiict.ac.in",
-        to: "201701075@daiict.ac.in",
+        from: "xx@xx.com",
+        to: "xx@xx.com",
         templateId: 16118863,
         templateModel: {
             name: "kaush",
